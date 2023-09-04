@@ -19,6 +19,10 @@ jobs:
       with:
         node-version: 18.x
         
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+        
     - name: Cache dependencies
       id: cache
       uses: actions/cache@v3
