@@ -17,7 +17,7 @@ jobs:
     - name: Set up node.js 18.x
       uses: actions/setup-node@v3
       with:
-        node-version: 14.x
+        node-version: 18.x
         
     - name: Cache dependencies
       id: cache
@@ -27,7 +27,7 @@ jobs:
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         
     - name: Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit == ''
       run: yarn install
       
     - name: build
