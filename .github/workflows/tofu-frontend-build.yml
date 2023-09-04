@@ -14,10 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Set up node.js 18.x
+    - name: Set up node.js
       uses: actions/setup-node@v3
-      with:
-        node-version: 18.x
         
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
