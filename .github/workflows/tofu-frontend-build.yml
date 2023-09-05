@@ -47,5 +47,5 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: tofu-frontend
+        tags: phj0860/tofu-frontend
         labels: latest
