@@ -57,8 +57,26 @@ export default {
     }
   },
 
+  router: {
+    extendRoutes(routes) {
+      routes.push(
+        {
+          name: 'sign-in',
+          path: '/page/user/sign-in', 
+          component: '~/pages/user/sign-in/index.vue',
+        },
+        {
+          name: 'sign-up',
+          path: '/page/user/sign-up',
+          component: '~/pages/user/sign-up/index.vue',
+        }
+      );
+    },
+  },
+
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
+    customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: true,
       themes: {
