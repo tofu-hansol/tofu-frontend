@@ -36,6 +36,7 @@
         color="#58C9B9"
         size="x-large"
         variant="tonal"
+        @click="login"
       >
         로그인
       </v-btn>
@@ -55,7 +56,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   data() {
@@ -68,9 +68,10 @@ export default {
     }
   },
   methods: {
-    submitForm() {
-      axios.get('/api/user/signUp')
-    },
+    async login() {
+      await this.$store.dispatch('login', this.submit)
+      await this.$router.push('/')
+    }
   },
 }
 </script>

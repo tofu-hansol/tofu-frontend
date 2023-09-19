@@ -23,7 +23,10 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    '~/plugins/local-storage',
+    '~/plugins/axios'
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -48,13 +51,14 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     progress: true,
-    baseUrl: process.env.API_URL,
+    // baseUrl: process.env.API_URL,
+    baseUrl: 'http://localhost:9090',
     proxy: true
   },
 
   proxy: {
     '/api': {
-      target: process.env.API_URL,
+      target: 'http://localhost:9090',
       changeOrigin: true
     }
   },
@@ -64,14 +68,19 @@ export default {
       routes.push(
         {
           name: 'sign-in',
-          path: '/page/user/sign-in', 
+          path: '/page/user/sign-in',
           component: '~/pages/user/sign-in/index.vue',
         },
         {
           name: 'sign-up',
           path: '/page/user/sign-up',
           component: '~/pages/user/sign-up/index.vue',
-        }
+        },
+        // {
+        //   name: 'verify-email',
+        //   path: '/page/user/verify-email',
+        //   component: '~/pages/user/verify-email/index.vue',
+        // },
       );
     },
   },

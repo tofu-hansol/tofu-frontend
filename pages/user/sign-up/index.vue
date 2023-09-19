@@ -74,7 +74,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   data() {
@@ -87,13 +86,15 @@ export default {
         password: '',
         name: '',
         dept: null,
-        mbti: '',
+        deptId: 1,
+        mbti: 'INTJ',
       },
       rules: {
+        // TODO: rules 해제 예정
         email: v => (v || '').match(/^.+@.+\..+$/) || '올바른 이메일 주소를 입력하세요',
-        hansolEmail: v => (v || '').match(/@hansol\.com$/) || '한솔 이메일 주소만 가능합니다',
+        // hansolEmail: v => (v || '').match(/@hansol\.com$/) || '한솔 이메일 주소만 가능합니다',
         length: len => v => (v || '').length >= len || `${len} 글자 이상 입력하세요`,
-        password: v => (v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) || '숫자, 대문자, 특수문자를 포함해야 합니다',
+        // password: v => (v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) || '숫자, 대문자, 특수문자를 포함해야 합니다',
         required: v => !!v || '필수 선택값입니다.',
       },
       agreement: false,
@@ -105,7 +106,18 @@ export default {
       this.$refs.form.reset()
     },
     submitForm() {
-      axios.get('/api/user/signUp')
+      this.$axios.post('/api/auth/signup', this.submit).then(
+        rst => {
+          console.log('rst -> ', rst)
+
+          if(rst.status === 200) {
+            // TODO: 팝업창 띄운 후 메인으로 가도록 변경필요
+            this.$router.push('/')
+          }
+        }
+      ).catch(
+        err => console.log('err -> ', err)
+      )
     },
   },
 }
