@@ -1,10 +1,14 @@
 <template>
-  <div>
+  <v-app>
+    <topNavbar />
     <Nuxt />
-  </div>
+  </v-app>
 </template>
 
 <script>
+import topNavbar from "~/components/layout/topNavbar.vue"
+
 export default {
+  components: { topNavbar },
 }
 </script>

@@ -18,10 +18,15 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: [
+    '~/assets/css/main.css'
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    '~/plugins/local-storage',
+    '~/plugins/axios'
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -57,10 +62,33 @@ export default {
     }
   },
 
+  router: {
+    extendRoutes(routes) {
+      routes.push(
+        {
+          name: 'sign-in',
+          path: '/page/user/sign-in',
+          component: '~/pages/user/sign-in/index.vue',
+        },
+        {
+          name: 'sign-up',
+          path: '/page/user/sign-up',
+          component: '~/pages/user/sign-up/index.vue',
+        },
+        // {
+        //   name: 'verify-email',
+        //   path: '/page/user/verify-email',
+        //   component: '~/pages/user/verify-email/index.vue',
+        // },
+      );
+    },
+  },
+
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
+    customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
