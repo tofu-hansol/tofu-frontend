@@ -1,6 +1,6 @@
 import createPersistedState from 'vuex-persistedstate'
 import Cookies from 'js-cookie'
-import cookie from 'Cookie'
+import cookie from 'cookie'
 
 // access the store, http request and environment from the Nuxt context
 // https://nuxtjs.org/api/context/
