@@ -10,12 +10,14 @@ export const AUTH_MUTATIONS = {
   LOGOUT: 'LOGOUT',
 }
 
-export const state = {
-  accessToken: null, // JWT access token
-  refreshToken: null, // JWT refresh token
-  memberId: null, // user memberId
-  navAuth: null,  // club auth map
-}
+export const state = () => ({
+  auth: {
+    accessToken: null, // JWT access token
+    refreshToken: null, // JWT refresh token
+    memberId: null, // user memberId
+    navAuth: null,  // club auth map
+  }
+})
 
 export const mutations = {
   // store the logged in user in the state
