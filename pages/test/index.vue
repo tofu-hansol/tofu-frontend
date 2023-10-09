@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   data() {
@@ -18,7 +17,7 @@ export default {
   },
   methods: {
     getTest() {
-      axios.get('api/tests')
+      this.$axios.get('/api/tests')
       .then((res) => {
         this.data = res.data
       })
