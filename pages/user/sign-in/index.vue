@@ -69,7 +69,7 @@ export default {
   methods: {
     async login() {
       await this.$store.dispatch('login', this.submit)
-      await this.$router.push('/')
+      await this.$router.push('/promotion')
     }
   },
 }
