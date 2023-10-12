@@ -15,25 +15,23 @@
           취미생활도 찾아보세요.
         </p>
         <div class="slide-btn">
-          <v-btn elevation="0" color="#2f9283" style="color: snow; font-weight: 700; font-size: .875rem;">
-            동호회 생성
-          </v-btn>
+            <new-club-popup></new-club-popup>
         </div>
       </div>
     </section>
     <section class="clubs-section">
         <v-tabs v-model="tab" color="#2f9283">
-          <v-tab :value="all">전체</v-tab>
-          <v-tab :value="workout">운동</v-tab>
-          <v-tab :value="cooking">요리</v-tab>
+          <v-tab value="all">전체</v-tab>
+          <v-tab value="workout">운동</v-tab>
+          <v-tab value="cooking">요리</v-tab>
         </v-tabs>
         <div>
           <v-window v-model="tab">
             <v-window-item :value="all">
               <club-short-card/>
             </v-window-item>
-            <v-window-item :value="workout">운동</v-window-item>
-            <v-window-item :value="cooking">요리</v-window-item>
+            <v-window-item value="workout">운동</v-window-item>
+            <v-window-item value="cooking">요리</v-window-item>
           </v-window>
         </div>
     </section>
@@ -42,8 +40,10 @@
 
 <script>
 import clubShortCard from '../../components/clubShortCard.vue'
+import NewClubPopup from '../../components/newClubPopup.vue'
+
 export default {
-  components: { clubShortCard },
+  components: { clubShortCard, NewClubPopup },
   data() {
     return {
       tab: null, 
