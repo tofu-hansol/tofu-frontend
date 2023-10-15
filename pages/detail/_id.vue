@@ -26,18 +26,22 @@
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="item in items" :key="item.name">
         <v-card-text>
-          {{ item.content }} <br/>
-          Here, You can see Something!
+          <component :is="getTabComponent(item.name)"></component>
         </v-card-text>
       </v-tab-item>
     </v-tabs-items>
+    <write-button/>
   </div>
 </template>
 
 <script>
+import feedCardVue from '@/components/feedCard.vue';
+import writeButton from '@/components/writeButton.vue';
+import clubScheduleVue from '@/components/clubSchedule.vue';
 // import { fetchClubById } from '@/api/index'
 
 export default {
+  components: { feedCardVue, writeButton, clubScheduleVue },
   async asyncData({ params }) {
     // const response = await fetchClubById(params.id)
     // const clubDetail = response.data
@@ -54,7 +58,21 @@ export default {
         { name: '앨범', content: 'Tab3 Content!' },
         { name: '설정', content: 'Tab3 Content!' },
       ],
-      
+    }
+  },
+
+  methods: {
+    getTabComponent(tabName) {
+      switch (tabName) {
+        case "전체":
+          return null; // 해당 탭에 대한 컴포넌트 반환
+        case "게시글":
+          return feedCardVue;
+        case "모임":
+          return clubScheduleVue;
+        default:
+          return null;
+      }
     }
   }
 }
@@ -104,5 +122,9 @@ export default {
 
 .v-tab {
   flex: 1;
+}
+
+.writeButton{
+  position: absolute;
 }
 </style>

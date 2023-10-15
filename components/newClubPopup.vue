@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-btn 
-      @click="openDialog"
       elevation="0" 
       color="#2f9283" 
       style="color: snow; font-weight: 700; font-size: .875rem;"
+      @click="openDialog"
     > 동호회 생성
     </v-btn>
     <v-dialog v-model="dialog" max-width="500">

@@ -33,14 +33,18 @@
 
 <script>
 export default {
+  props: {
+    getTabComponent: String
+  },
   data() {
     return {
       name: '서민아',
       dept: 'SI개발파트',
       time: '6시간 전',
-      comment_conunt: 10
+      comment_conunt: 10,
+      isAble: false
     }
-  }
+  },
 }
 </script>
 

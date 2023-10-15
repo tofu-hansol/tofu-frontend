@@ -72,5 +72,6 @@ export default {
 
 .club-items {
   overflow: auto;
+  position: relative;
 }
 </style>
