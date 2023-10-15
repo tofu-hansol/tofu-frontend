@@ -20,35 +20,27 @@
       </div>
     </section>
     <section class="clubs-section">
-        <v-tabs v-model="tab" color="#2f9283">
-          <v-tab value="all">전체</v-tab>
-          <v-tab value="workout">운동</v-tab>
-          <v-tab value="cooking">요리</v-tab>
-        </v-tabs>
-        <div>
-          <v-window v-model="tab">
-            <v-window-item :value="all">
-              <club-short-card/>
-            </v-window-item>
-            <v-window-item value="workout">운동</v-window-item>
-            <v-window-item value="cooking">요리</v-window-item>
-          </v-window>
-        </div>
+      <v-tabs color="#58C9B9">
+        <v-tab value="0">전체</v-tab>
+        <v-tab value="1">운동</v-tab>
+        <v-tab value="2">요리</v-tab>
+        <v-tab-item class="club-items">
+          <club-short-card/>  
+        </v-tab-item>
+      </v-tabs>
     </section>
   </div>
 </template>
 
 <script>
-import clubShortCard from '../../components/clubShortCard.vue'
-import NewClubPopup from '../../components/newClubPopup.vue'
+import ClubShortCard from '~/components/clubShortCard.vue'
+import NewClubPopup from '~/components/newClubPopup.vue'
 
 export default {
-  components: { clubShortCard, NewClubPopup },
+  components: { NewClubPopup, ClubShortCard },
   data() {
-    return {
-      tab: null, 
-    }
-  }
+    return {}
+  },
 }
 </script>
 
@@ -76,5 +68,9 @@ export default {
 .clubs-section {
   max-width: 48rem;
   margin: 0 auto;
+}
+
+.club-items {
+  overflow: auto;
 }
 </style>

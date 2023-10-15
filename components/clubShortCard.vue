@@ -1,9 +1,6 @@
 <template>
   <div class="club-short-wrap">
-    <v-card v-for="club in clubs" :key="club"
-      class="mx-auto"
-      max-width="350"
-    >
+    <v-card v-for="club in clubs" :key="club.id" class="mx-auto" max-width="350" @click="moveToClub(club.id)">
       <v-img
         class="align-end text-white"
         height="150"
@@ -11,7 +8,7 @@
         cover
       >
       </v-img>
-      <v-card-title>{{ club }}</v-card-title>
+      <v-card-title>{{ club.name }}</v-card-title>
       <v-card-subtitle class="pt-1">
         Member 10
       </v-card-subtitle>
@@ -33,7 +30,16 @@
 export default {
   data() {
     return {
-      clubs: [ '오르다(클라이밍 동호회)', 'Made By(베이킹 동호회)' ]
+      clubs: [ 
+        {id: 1, name: '오르다(클라이밍 동호회)'}, 
+        {id: 2, name: 'Made By(베이킹 동호회)'} 
+      ]
+    }
+  },
+  methods: {
+    moveToClub(id) {
+      console.log(id)
+      this.$router.push(`detail/${id}`)
     }
   }
 }
