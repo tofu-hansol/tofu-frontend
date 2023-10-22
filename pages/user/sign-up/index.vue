@@ -7,7 +7,6 @@
       <v-text-field
         v-model="submit.email"
         label="이메일"
-        :rules="[rules.email, rules.hansolEmail]"
         color="#58C9B9"
         prepend-inner-icon="mdi-email-outline"
       ></v-text-field>
@@ -15,7 +14,6 @@
       <v-text-field
         v-model="submit.password"
         label="비밀번호"
-        :rules="[rules.password, rules.length(6)]"
         color="#58C9B9"
         type="password"
         prepend-inner-icon="mdi-lock-outline"
@@ -30,8 +28,7 @@
       <v-select
         v-model="submit.dept"
         label="부서"
-        :items="['부서1','부서2']"
-        :rules="[rules.required]"
+        :items="depts"
         color="#58C9B9"
         required
       ></v-select>
@@ -45,7 +42,6 @@
 
       <v-checkbox
         v-model="agreement"
-        :rules="[rules.required]"
         color="#58C9B9"
       ><template #label>
           회원가입에 동의합니다.
@@ -74,34 +70,38 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
-      depts: [
-        'DT개발팀','스마트연구소', 'IT전략기술사업팀'
-      ],
+      depts: [],
       submit: {
         email: '',
         password: '',
         name: '',
         dept: null,
         deptId: 1,
-        mbti: 'INTJ',
-      },
-      rules: {
-        // TODO: rules 해제 예정
-        email: v => (v || '').match(/^.+@.+\..+$/) || '올바른 이메일 주소를 입력하세요',
-        // hansolEmail: v => (v || '').match(/@hansol\.com$/) || '한솔 이메일 주소만 가능합니다',
-        length: len => v => (v || '').length >= len || `${len} 글자 이상 입력하세요`,
-        // password: v => (v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) || '숫자, 대문자, 특수문자를 포함해야 합니다',
-        required: v => !!v || '필수 선택값입니다.',
+        mbti: '',
       },
       agreement: false,
       isValid: false,
     }
   },
+
+  mounted() {
+    this.dataLoad()
+  },
+
   methods: {
+    async dataLoad() {
+      const result = await this.$axios.get('/api/depts', { 
+        headers: {
+          Authentication: 'Bearer ' + this.$store.state.accessToken
+        },
+        params: { companyId: 1}
+      })
+      console.log(result)
+    },
+
     resetForm() {
       this.$refs.form.reset()
     },
@@ -111,7 +111,6 @@ export default {
           console.log('rst -> ', rst)
 
           if(rst.status === 200) {
-            // TODO: 팝업창 띄운 후 메인으로 가도록 변경필요
             this.$router.push('/')
           }
         }

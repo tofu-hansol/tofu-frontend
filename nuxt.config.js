@@ -1,6 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  ssr: false,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - tofu-frontend',
@@ -15,6 +16,10 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      // 다음 주소 검색 API
+      {src: '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'},
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -25,7 +30,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/local-storage',
-    '~/plugins/axios'
+    '~/plugins/axios',
+    '~/plugins/naver-map.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -62,28 +68,6 @@ export default {
     }
   },
 
-  router: {
-    extendRoutes(routes) {
-      routes.push(
-        {
-          name: 'sign-in',
-          path: '/page/user/sign-in',
-          component: '~/pages/user/sign-in/index.vue',
-        },
-        {
-          name: 'sign-up',
-          path: '/page/user/sign-up',
-          component: '~/pages/user/sign-up/index.vue',
-        },
-        // {
-        //   name: 'verify-email',
-        //   path: '/page/user/verify-email',
-        //   component: '~/pages/user/verify-email/index.vue',
-        // },
-      );
-    },
-  },
-
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
@@ -105,4 +89,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  // server setup
+  server: {
+    port: 3000,
+  },
 }

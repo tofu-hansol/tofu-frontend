@@ -1,27 +1,24 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-
-Vue.use(Vuex);
+import axios from 'axios'
 
 export const AUTH_MUTATIONS = {
   SET_USER: 'SET_USER',
   SET_PAYLOAD: 'SET_PAYLOAD',
-  SET_NAV_AUTH: 'SET_NAV_AUTH',
+  SET_CLUB_AUTH: 'SET_CLUB_AUTH',
   LOGOUT: 'LOGOUT',
 }
 
-export const state = {
+export const state = () => ({
   accessToken: null, // JWT access token
   refreshToken: null, // JWT refresh token
   memberId: null, // user memberId
-  navAuth: null,  // club auth map
-}
+  clubAuth: null,  // club auth map
+})
 
 export const mutations = {
   // store the logged in user in the state
-  [AUTH_MUTATIONS.SET_USER] (state, { memberId, navAuth }) {
+  [AUTH_MUTATIONS.SET_USER] (state, { memberId, clubAuth }) {
     state.memberId = memberId
-    state.navAuth = navAuth
+    state.clubAuth = clubAuth
   },
 
   // store new or updated token fields in the state
@@ -34,26 +31,68 @@ export const mutations = {
     }
   },
 
-  // [AUTH_MUTATIONS.SET_NAV_AUTH] (state, { navAuth }) {
+  // [AUTH_MUTATIONS.SET_NAV_AUTH] (state, { clubAuth }) {
   // },
 
   // clear our the state, essentially logging out the user
   [AUTH_MUTATIONS.LOGOUT] (state) {
-    state.membermemberId = null
+    state.memberId = null
     state.accessToken = null
     state.refreshToken = null
+    localStorage.removeItem("login")
   },
+
+  saveStateToStorage(state) {
+		localStorage.setItem("login", JSON.stringify(state));
+	},
+
+  readStateFromStorage(state) {
+		if (localStorage.getItem("login") != null) {
+			const storage = JSON.parse(localStorage.getItem("login"));
+			if (storage.memberId != null) {
+				state.memberId = storage.memberId;
+			}
+			if (storage.accessToken != null) {
+				state.accessToken = storage.accessToken;
+			}
+			if (storage.memberId != null) {
+				state.refreshToken = storage.refreshToken;
+			}
+      if (storage.clubAuth != null) {
+				state.clubAuth = storage.clubAuth;
+			}
+		}
+	}
 }
 
 export const actions = {
   async login ({ commit, dispatch }, submit) {
-    // make an API call to login the user with an email address and password
-    const { data: { data } } = await this.$axios.post('/api/auth/login', submit)
+    let result = false;
+	  let resultErr = null;
+    try {
+      const { data: { data } } = await this.$axios.post('/api/auth/login', submit)
     
-    console.log('data -> ', data)
-    // commit the user and tokens to the state
-    commit(AUTH_MUTATIONS.SET_USER, { memberId: data.memberId, navAuth: data.clubAuthorizationDTO })
-    commit(AUTH_MUTATIONS.SET_PAYLOAD, { accessToken: data.accessToken, refreshToken: data.refreshToken })
+      console.log('data -> ', data)
+      // commit the user and tokens to the state
+      commit(AUTH_MUTATIONS.SET_USER, { memberId: data.memberId, clubAuth: data.clubAuthorizationDTO })
+      commit(AUTH_MUTATIONS.SET_PAYLOAD, { accessToken: data.accessToken, refreshToken: data.refreshToken })
+      commit('saveStateToStorage');
+      axios.defaults.headers.common['Access-Token'] = data.accessToken;
+			result = true;
+    } catch(err) {
+      if (!err.response) {
+        err.response = {data:{"success":false, "errormessage":err.message}};
+      }
+      resultErr = err;
+    }
+
+    return new Promise((resolve, reject) => {
+      if (result) {
+        resolve();
+      } else {
+        reject(resultErr);
+      }
+    });
   },
 
   // given the current refresh token, refresh the user's access token to prevent expiry
@@ -69,6 +108,10 @@ export const actions = {
   // logout the user
   logout ({ commit, state }) {
     commit(AUTH_MUTATIONS.LOGOUT)
+  },
+
+  doReadStateFromStorage({commit}) {
+    commit('readStateFromStorage');
   },
 
   // https://nuxtjs.org/guide/vuex-store/#the-nuxtserverinit-action
@@ -95,5 +138,5 @@ export const getters = {
   isAuthenticated: (state) => {
     return state.accessToken && state.accessToken !== ''
   },
-  getNavAuth: (state) => state.navAuth,
+  getClubAuth: (state) => state.clubAuth,
 }
