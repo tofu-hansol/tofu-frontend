@@ -27,6 +27,16 @@ jobs:
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+    
+    - name: Generate Environment Variables File for Production
+        run: |
+          echo "API_URL=$API_URL" >> .env
+          echo "NAVER_MAP_API_KEY=$NAVER_MAP_API_KEY" >> .env
+          echo "NAVER_MAPS_CLIENT_ID=$NAVER_MAPS_CLIENT_ID" >> .env
+        env:
+          API_URL: ${{ secrets.API_URL }}
+          NAVER_MAP_API_KEY: ${{ secrets.NAVER_MAP_API_KEY }}
+          NAVER_MAPS_CLIENT_ID: ${{ secrets.NAVER_MAPS_CLIENT_ID }}
         
     - name: Install dependencies
       # if: steps.cache.outputs.cache-hit == ''
