@@ -1,11 +1,11 @@
 <template>
   <div class="club-short-wrap">
-    <v-card v-for="club in clubs" :key="club.clubId" class="mx-auto" max-width="350">
+    <v-card v-for="club in clubs" :key="club.clubId" class="mx-auto" width="350">
       <div @click="moveToClub(club.clubId)">
         <v-img
           class="align-end text-white"
-          height="150"
-          src="https://mblogthumb-phinf.pstatic.net/MjAxODA0MTJfMjEg/MDAxNTIzNDk5NDA1MTU0.fMpVtcJCq7pSbuvFjLhK_i5SeEyJMcFdGi47YZlyBSAg.YJ-Bejc-AyyzRfCvS2Buyvc3b1g11nlgyMmLnJW5-Csg.JPEG.sports_7330/1.jpg?type=w800"
+          height="120"
+          :src="club.profileImageUrl"
           cover
         >
         </v-img>
@@ -30,8 +30,16 @@
 
 <script>
 export default {
+  props: {
+    initCategoryId: {
+      type: Number,
+      required: true,
+    }
+  },
+
   data() {
     return {
+      categoryId: this.initCategoryId,
       clubs: []
     }
   },
@@ -47,7 +55,7 @@ export default {
           Authentication: 'Bearer ' + this.$store.state.accessToken
         },
         params: { 
-          categoryId: 1
+          categoryId: this.categoryId
         }
       })
       console.log(response.data.data.content)
@@ -56,7 +64,6 @@ export default {
     },
 
     moveToClub(id) {
-      console.log(id)
       this.$router.push(`detail/${id}`)
     },
 
@@ -71,6 +78,12 @@ export default {
 .club-short-wrap {
   display: flex;
   margin-top: 2rem;
+  flex-wrap: wrap; 
+  justify-content: space-between;
+}
+
+.v-card {
+  margin-bottom: 2rem;
 }
 
 .v-card__actions {

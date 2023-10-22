@@ -68,6 +68,16 @@ export default {
     }
   },
 
+  router: {
+    extendRoutes(routes, resolve) {
+      // Add a custom route for the root URL to redirect to /promotion
+      routes.push({
+        path: '/',
+        redirect: '/promotion'
+      })
+    }
+  },
+
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],

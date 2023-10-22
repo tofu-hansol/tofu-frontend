@@ -1,10 +1,10 @@
 <template>
   <div>
-    <promotion/>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'IndexPage',
   data() {

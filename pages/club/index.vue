@@ -20,25 +20,39 @@
       </div>
     </section>
     <section class="clubs-section">
-      <v-tabs color="#58C9B9">
-        <v-tab value="0">전체</v-tab>
-        <v-tab value="1">운동</v-tab>
-        <v-tab value="2">요리</v-tab>
-        <v-tab-item class="club-items">
-          <club-short-card/>  
-        </v-tab-item>
+      <v-tabs v-model="tab" color="#58C9B9">
+        <v-tab v-for="category in categorys" :key="category.id" :vaule="category.id">
+          {{ category.name }}
+        </v-tab>
       </v-tabs>
+      <v-window v-model="tab">
+        <v-window-item v-for="category in categorys" :key="category.id" :vaule="category.id">
+          <club-short-card :init-category-id="category.id"/>
+        </v-window-item>
+      </v-window>
     </section>
   </div>
 </template>
 
 <script>
-import ClubShortCard from '~/components/clubShortCard.vue'
-
+import ClubShortCard from '@/components/clubShortCard.vue'
+ 
 export default {
   components: { ClubShortCard },
+  
   data() {
-    return {}
+    return {
+      tab: null,
+      categorys: [
+        { id: 1, name: '운동',},
+        { id: 2, name: '스터디',},
+        { id: 3, name: '투자/금융',},
+        { id: 4, name: '음식',},
+        { id: 5, name: '문화/예술',},
+        { id: 6, name: '인문학/책',},
+        { id: 7, name: '기타',},
+      ],
+    }
   },
 }
 </script>

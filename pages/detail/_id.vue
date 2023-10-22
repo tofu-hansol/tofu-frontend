@@ -9,12 +9,12 @@
       </v-avatar>
       <div class="club-profile-detail">
         <div class="club-profile-detail-header">
-          <h3>Made By</h3>
-          <div>멤버 6 게시글 1</div>
+          <h3>{{ club.name }}</h3>
+          <div>멤버 {{ club.memberCount }} 게시글 {{ club.boardCount }}</div>
         </div>
         <div class="club-profile-detail-content">
           <h3>소개</h3>
-          <div>소개합니다.</div>
+          <div>{{ club.description}}</div>
         </div>
       </div>
     </div>
@@ -40,44 +40,59 @@ import feedCardVue from '@/components/feedCard.vue';
 import writeButton from '@/components/writeButton.vue';
 import clubScheduleVue from '@/components/clubSchedule.vue';
 import albumVue from '@/components/clubAlbum.vue';
+// import { fetchClubById } from '@/api/index'
+
 
 export default {
   components: { feedCardVue, writeButton, clubScheduleVue, albumVue },
-  async asyncData({ params }) {
-  },
 
   data() {
     return {
       tab: null,
+      club: [
+        { clubId: 0,
+          name: '',
+          clubProfileUrl: '',
+          clubBackgroundUrl: '',
+          description: '',
+          fee: 0,
+          accountNumber: '',
+          memberCount: 0,
+          boardCount: 0, }
+      ],
       items: [
-        { name: '전체', content: 'Tab1 Content!' },
         { name: '게시글', content: 'Tab2 Content!', pageName: 'board'},
         { name: '모임', content: 'Tab3 Content!' },
         { name: '앨범', content: 'Tab3 Content!' },
-        { name: '설정', content: 'Tab3 Content!' },
+        { name: '멤버', content: 'Tab3 Content!' },
       ],
+
     }
   },
 
   computed: {
-    isAuthenticated() {
-      const clubAuth = this.$store.state.clubAuth
-      // const detailId = this.$route.params
-      console.log(clubAuth)
-      console.log(this.$route.params)
+  },
 
-      // if (detailId.id === clubAuth.clubAuth.clubRole === 'MEMBER') {
-      //   return true
-      // }
-      return false
-    },
+  mounted() {
+    this.dataLoad()
   },
 
   methods: {
+   async dataLoad() {
+      const clubId = this.$route.params.id
+      console.log(clubId)
+      await this.$axios.get(`/api/clubs/${clubId}`, {
+        headers: {
+          Authentication: 'Bearer ' + this.$store.state.accessToken
+        }
+      }).then(result => {
+        this.club = result.data.data
+        console.log(this.club)
+      })
+    },
+
     getTabComponent(tabName) {
       switch (tabName) {
-        case "전체":
-          return null; // 해당 탭에 대한 컴포넌트 반환
         case "게시글":
           return feedCardVue;
         case "모임":

@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import FeedCard from '~/components/feedCard.vue'
-import WriteButton from '~/components/writeButton.vue'
+import FeedCard from '@/components/feedCard.vue'
+import WriteButton from '@/components/writeButton.vue'
 
 export default{
   components: { FeedCard, WriteButton },
