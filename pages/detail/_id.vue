@@ -31,7 +31,7 @@
       </v-tab-item>
     </v-tabs-items>
     <write-button/>
-    <new-schedule-popup/>
+    <new-schedule-popup :club-id="club.clubId"/>
   </div>
 </template>
 
