@@ -28,7 +28,7 @@
       <v-select
         v-model="submit.dept"
         label="부서"
-        :items="['부서1','부서2']"
+        :items="depts"
         color="#58C9B9"
         required
       ></v-select>
@@ -73,9 +73,7 @@
 export default {
   data() {
     return {
-      depts: [
-        'DT개발팀','스마트연구소', 'IT전략기술사업팀'
-      ],
+      depts: [],
       submit: {
         email: '',
         password: '',
@@ -88,7 +86,22 @@ export default {
       isValid: false,
     }
   },
+
+  mounted() {
+    this.dataLoad()
+  },
+
   methods: {
+    async dataLoad() {
+      const result = await this.$axios.get('/api/depts', { 
+        headers: {
+          Authentication: 'Bearer ' + this.$store.state.accessToken
+        },
+        params: { companyId: 1}
+      })
+      console.log(result)
+    },
+
     resetForm() {
       this.$refs.form.reset()
     },

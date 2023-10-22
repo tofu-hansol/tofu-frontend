@@ -3,7 +3,7 @@
     <nav>
       <div class="navbar-container">
         <div class="logo">
-          <nuxt-link to="/promotion"><img src="~/assets/image/main-logo.png" class="homeLogo"></nuxt-link>
+          <nuxt-link to="/"><img src="~/assets/image/main-logo.png" class="homeLogo"></nuxt-link>
         </div>
         <ul class="navbar-links">
           <li>
@@ -16,12 +16,15 @@
             <nuxt-link to="/about" class="nav-link">대시보드</nuxt-link>
           </li>
         </ul>
-        <div class="button-wrap" v-if="!isAuthenticated">
+        <div v-if="!isAuthenticated" class="button-wrap">
           <v-btn class="btn" elevation="0" variant="outlined" color="#58C9B9" @click="signIn">Sign in</v-btn>
           <v-btn class="btn" elevation="0" variant="outlined" color="#58C9B9" @click="signUp">Sign up</v-btn>
         </div>
-        <div v-if="isAuthenticated">
-          <p>{{ $store.state.memberId }}님 환영합니다!</p>
+        <div v-if="isAuthenticated" class="button-wrap">
+          <v-btn fab small class="btn" elevation="0" color="#ffffff">
+            <v-icon aria-hidden="false">mdi-account</v-icon>
+          </v-btn>
+          <v-btn class="btn" elevation="0" variant="outlined" color="#58C9B9" @click="logout">로그아웃</v-btn>
         </div>
       </div>
     </nav>
@@ -32,6 +35,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -45,12 +49,22 @@ export default {
     },
   },
 
+  mounted() {
+    this.$store.dispatch("doReadStateFromStorage");  
+  },
+
   methods: {
     signIn() {
-      this.$router.push('/page/user/sign-in');
+      this.$router.push('/user/sign-in')
     },
     signUp() {
-      this.$router.push('/page/user/sign-up');
+      this.$router.push('/user/sign-up')
+    },
+    logout() {
+      this.$store.dispatch('logout')
+    },
+    moveToMyPage() {
+      console.log("마이페이지")
     }
   },
 }
@@ -110,14 +124,15 @@ img {
 
 .button-wrap {
   display: flex;
+  justify-content: space-between;
 }
 
 .btn {
-  width: 90px;
   margin-right: 10px;
 }
 
 main {
   margin-top: 4rem;
 }
+
 </style>

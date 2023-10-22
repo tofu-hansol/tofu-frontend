@@ -21,9 +21,11 @@
     "node-sass": "^9.0.0",
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
+    "vue-daum-postcode": "^1.2.1",
     "vue-naver-maps": "^0.15.0",
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10",
+    "vue3-naver-maps": "^4.2.0",
     "vuetify": "^2.6.10",
     "vuex-persistedstate": "^4.1.0"
   },

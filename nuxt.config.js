@@ -16,6 +16,10 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      // 다음 주소 검색 API
+      {src: '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'},
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -62,28 +66,6 @@ export default {
       target: process.env.API_URL,
       changeOrigin: true
     }
-  },
-
-  router: {
-    extendRoutes(routes) {
-      routes.push(
-        {
-          name: 'sign-in',
-          path: '/page/user/sign-in',
-          component: '~/pages/user/sign-in/index.vue',
-        },
-        {
-          name: 'sign-up',
-          path: '/page/user/sign-up',
-          component: '~/pages/user/sign-up/index.vue',
-        },
-        // {
-        //   name: 'verify-email',
-        //   path: '/page/user/verify-email',
-        //   component: '~/pages/user/verify-email/index.vue',
-        // },
-      );
-    },
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

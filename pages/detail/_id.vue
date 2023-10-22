@@ -31,6 +31,7 @@
       </v-tab-item>
     </v-tabs-items>
     <write-button/>
+    <new-schedule-popup/>
   </div>
 </template>
 
@@ -38,14 +39,11 @@
 import feedCardVue from '@/components/feedCard.vue';
 import writeButton from '@/components/writeButton.vue';
 import clubScheduleVue from '@/components/clubSchedule.vue';
-// import { fetchClubById } from '@/api/index'
+import albumVue from '@/components/clubAlbum.vue';
 
 export default {
-  components: { feedCardVue, writeButton, clubScheduleVue },
+  components: { feedCardVue, writeButton, clubScheduleVue, albumVue },
   async asyncData({ params }) {
-    // const response = await fetchClubById(params.id)
-    // const clubDetail = response.data
-    // return { clubDetail }
   },
 
   data() {
@@ -61,6 +59,20 @@ export default {
     }
   },
 
+  computed: {
+    isAuthenticated() {
+      const clubAuth = this.$store.state.clubAuth
+      // const detailId = this.$route.params
+      console.log(clubAuth)
+      console.log(this.$route.params)
+
+      // if (detailId.id === clubAuth.clubAuth.clubRole === 'MEMBER') {
+      //   return true
+      // }
+      return false
+    },
+  },
+
   methods: {
     getTabComponent(tabName) {
       switch (tabName) {
@@ -70,6 +82,8 @@ export default {
           return feedCardVue;
         case "모임":
           return clubScheduleVue;
+        case "앨범":
+          return albumVue;
         default:
           return null;
       }

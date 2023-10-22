@@ -34,10 +34,9 @@
 
 <script>
 import ClubShortCard from '~/components/clubShortCard.vue'
-import NewClubPopup from '~/components/newClubPopup.vue'
 
 export default {
-  components: { NewClubPopup, ClubShortCard },
+  components: { ClubShortCard },
   data() {
     return {}
   },

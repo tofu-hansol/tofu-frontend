@@ -5,8 +5,9 @@
       class="btn"
       elevation="0"
       color="#58C9B9"
+      @click="moveToNewPost"
     >
-      <v-icon class="btn-hover-text">mdi-plus</v-icon>
+      <v-icon>mdi-plus</v-icon>
       <span class="btn-text">글쓰기</span>
     </v-btn>
   </div>
@@ -14,7 +15,11 @@
 
 <script>
 export default {
-
+  methods: {
+    moveToNewPost() {
+      
+    }
+  }
 }
 </script>
 
@@ -32,21 +37,5 @@ export default {
   padding: 0;
   width: 6rem;
   height: 3rem;
-}
-
-.fixed-button #write-button:hover {
-  padding: 0;
-  border-radius: 100%;
-  width: 0.5rem;
-  height: 4rem;
-}
-
-.fixed-button #write-button:hover .btn-text {
-  display: none;
-}
-
-.fixed-button #write-button:hover .btn-hover-text {
-  display: block;
-  padding: 0;
 }
 </style>
