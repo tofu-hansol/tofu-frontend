@@ -5,7 +5,7 @@
       class="btn"
       elevation="0"
       color="#58C9B9"
-      @click="moveToNewPost"
+      @click="moveToWritePost"
     >
       <v-icon>mdi-plus</v-icon>
       <span class="btn-text">글쓰기</span>
@@ -15,9 +15,23 @@
 
 <script>
 export default {
+  props: {
+    initClubId: {
+      type: String,
+      required: true,
+    }
+  },
+
+  data() {
+    return {
+      clubId: this.initClubId
+    }
+  },
+
   methods: {
-    moveToNewPost() {
-      
+    moveToWritePost() {
+      console.log(this.clubId)
+      this.$router.push({path: '/board/write', query: {clubId: this.clubId}})
     }
   }
 }

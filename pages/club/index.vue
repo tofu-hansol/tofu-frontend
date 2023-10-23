@@ -2,20 +2,24 @@
   <div>
     <section class="slide-section">
       <div class="slide-wrap">
-        <h1 class="slide-title">
-          두루두루
-          <br>
-          부대끼며
-          <br>
-          친해지는 한솔 모임
-        </h1>
-        <p class="slide-content">
-          사내 동료들과 친해지고
-          <br>
-          취미생활도 찾아보세요.
-        </p>
-        <div class="slide-btn">
-            <new-club-popup></new-club-popup>
+        <div>
+          <h1 class="slide-title">
+            우리 회원들이
+            <br>
+            활동하는 다양한 모임들
+            <br>
+          </h1>
+          <p class="slide-content">
+            동료들이 가장 관심있는 
+            <br>
+            동호회에 함께하세요.
+          </p>
+          <div class="slide-btn">
+              <new-club-popup></new-club-popup>
+          </div>
+        </div>
+        <div class="img-wrap">
+          <img class="slide-img" src="~/assets/image/team.png"/>
         </div>
       </div>
     </section>
@@ -67,6 +71,8 @@ export default {
   max-width: 48rem;
   padding: 3rem 1rem 0;
   margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
 }
 
 .slide-title {
@@ -77,6 +83,18 @@ export default {
   margin-top: 10px;
   font-size: 1.125rem;
 }
+
+.img-wrap {
+  width: 279px;
+  height: 279px;
+}
+
+.slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 
 .clubs-section {
   max-width: 48rem;

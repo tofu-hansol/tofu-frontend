@@ -30,7 +30,7 @@
         </v-card-text>
       </v-tab-item>
     </v-tabs-items>
-    <write-button/>
+    <write-button :init-club-id="$route.params.id"/>
     <new-schedule-popup :club-id="club.clubId"/>
   </div>
 </template>

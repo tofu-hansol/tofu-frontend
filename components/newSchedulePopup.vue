@@ -14,27 +14,113 @@
         <v-card-title>모임일정 생성</v-card-title>
         <v-card-text>
           <v-form>
-            <v-text-field label="제목"></v-text-field>
-            <v-text-field label="내용"></v-text-field>
-            <v-text-field label="시간"></v-text-field>
+            <v-text-field outlined color="#58C9B9" label="제목"></v-text-field>
+            <v-text-field outlined color="#58C9B9" label="내용"></v-text-field>
             <v-row>
-              <v-col cols="6">
-                <v-text-field id="postcode" placeholder="우편번호"></v-text-field>
+              <v-col
+                cols="11"
+                sm="5"
+              >
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :return-value.sync="date"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+                >
+                  <template #activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="date"
+                      outlined color="#58C9B9"
+                      label="Picker in menu"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="date"
+                    no-title
+                    scrollable
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="menu = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.menu.save(date)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-menu>
               </v-col>
-              <v-col cols="3">
-                <v-btn @click="execDaumPostcode()">우편번호 찾기</v-btn>
+              <v-col
+                cols="11"
+                sm="5"
+              >
+                <v-menu
+                  ref="menu"
+                  v-model="menu2"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="time"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template #activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="time"
+                      outlined color="#58C9B9"
+                      label="Picker in menu"
+                      prepend-icon="mdi-clock-time-four-outline"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="menu2"
+                    v-model="time"
+                    full-width
+                    @click:minute="$refs.menu.save(time)"
+                  ></v-time-picker>
+                </v-menu>
               </v-col>
             </v-row>
-            <v-text-field id="roadAddress" placeholder="도로명주소"></v-text-field>
-            <v-text-field id="jibunAddress" placeholder="지번주소"></v-text-field>
+            <v-row>
+              <v-col cols="6">
+                <v-text-field id="postcode" outlined color="#58C9B9" placeholder="우편번호"></v-text-field>
+              </v-col>
+              <v-col class="mt-3" cols="3">
+                <v-btn 
+                  elevation="0"
+                  color="#58C9B9" 
+                  @click="execDaumPostcode()"
+                >우편번호 찾기</v-btn>
+              </v-col>
+            </v-row>
+            <v-text-field id="roadAddress" outlined color="#58C9B9" placeholder="도로명주소"></v-text-field>
+            <v-text-field id="jibunAddress" outlined color="#58C9B9" placeholder="지번주소"></v-text-field>
             <span id="guide" style="color:#999;display:none"></span>
-            <v-text-field id="detailAddress" placeholder="상세주소"></v-text-field>
-            <v-text-field id="extraAddress" placeholder="참고항목"></v-text-field>
+            <v-text-field id="detailAddress" outlined color="#58C9B9" placeholder="상세주소"></v-text-field>
+            <v-text-field id="extraAddress" outlined color="#58C9B9" placeholder="참고항목"></v-text-field>
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-btn type="submit" color="#2f9283">생성</v-btn>
-          <v-btn color="#2f9283" @click="closeDialog">닫기</v-btn>
+          <v-btn type="submit" color="#58C9B9">생성</v-btn>
+          <v-btn color="#58C9B9" @click="closeDialog">닫기</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -42,7 +128,9 @@
 </template>
 
 <script>
+
 export default {
+  
   data() {
     return {
       dialog: false,
@@ -67,7 +155,7 @@ export default {
     },
 
     execDaumPostcode() {
-              new window.daum.Postcode({
+    new window.daum.Postcode({
           oncomplete: function(data) {
               // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
