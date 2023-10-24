@@ -32,6 +32,32 @@ import FeedCard from '@/components/feedCard.vue'
 
 export default{
   components: { FeedCard },
+  data() {
+    return {
+      boardId: 0,
+      memberId: 0,
+      memberProfileUrl: '',
+      deptName: '',
+      memberName: '',
+      title: '',
+      content: '',
+      createdAt: '',
+      updatedAt: '',
+      photoList: [],
+    }
+  },
+
+  created() {
+    this.dataLoad()
+  },
+
+  methods: {
+    async dataLoad() {
+      await this.$axios.get('/api/clubs/boards/featured').then(result => {
+        console.log(result.data.data.content)
+      })
+    }
+  }
 }
 </script>
 

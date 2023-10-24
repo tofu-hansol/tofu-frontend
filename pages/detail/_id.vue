@@ -26,7 +26,7 @@
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="item in items" :key="item.name">
         <v-card-text>
-          <component :is="getTabComponent(item.name)"></component>
+          <component :is="getTabComponent(item.name)" :param="club.clubId"></component>
         </v-card-text>
       </v-tab-item>
     </v-tabs-items>

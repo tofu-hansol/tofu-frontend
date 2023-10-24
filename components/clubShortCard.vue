@@ -7,6 +7,7 @@
           height="120"
           :src="club.profileImageUrl"
           cover
+          @error="defaultImg"
         >
         </v-img>
         <v-card-title>{{ club.clubName }}</v-card-title>
@@ -69,6 +70,10 @@ export default {
 
     registerClub() {
       confirm('가입하시겠습니까?')
+    },
+
+    defaultImg(e) {
+      e.target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTOZ_42URUxDxeWLGr9_-TY4STPTX_f0kqgg&usqp=CAU'
     }
   }
 }
