@@ -17,14 +17,14 @@
           </li>
         </ul>
         <div v-if="!isAuthenticated" class="button-wrap">
-          <v-btn class="btn" elevation="0" variant="outlined" color="#58C9B9" @click="signIn">Sign in</v-btn>
-          <v-btn class="btn" elevation="0" variant="outlined" color="#58C9B9" @click="signUp">Sign up</v-btn>
+          <v-btn rounded class="btn" elevation="0" variant="outlined" color="#58C9B9" @click="signIn">Sign in</v-btn>
+          <v-btn rounded class="btn" elevation="0" variant="outlined" color="#58C9B9" @click="signUp">Sign up</v-btn>
         </div>
         <div v-if="isAuthenticated" class="button-wrap">
           <v-btn fab small class="btn" elevation="0" color="#ffffff">
             <v-icon aria-hidden="false">mdi-account</v-icon>
           </v-btn>
-          <v-btn class="btn" elevation="0" variant="outlined" color="#58C9B9" @click="logout">로그아웃</v-btn>
+          <v-btn rounded class="btn" elevation="0" variant="outlined" color="#58C9B9" @click="logout">로그아웃</v-btn>
         </div>
       </div>
     </nav>

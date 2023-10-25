@@ -21,7 +21,7 @@
       </div>
 
       <v-card-actions>
-        <v-btn elevation="0" color="#2f9283" style="color: snow; font-weight: 700; font-size: .875rem;" @click="registerClub">
+        <v-btn elevation="0" color="#2f9283" style="color: snow; font-weight: 700; font-size: .875rem;" @click="registerClub(club.clubId)">
           가입하기
         </v-btn>
       </v-card-actions>
@@ -68,8 +68,13 @@ export default {
       this.$router.push(`detail/${id}`)
     },
 
-    registerClub() {
-      confirm('가입하시겠습니까?')
+    registerClub(clubId) {
+      const message = '가입하시겠습니까?'
+      if(confirm(message)) {
+        this.$axios.post(`/api/club-authority/${clubId}/members`).then(result => {
+          alert('가입신청이 완료되었습니다. \n동호회 회장 승인 후 활동이 가능합니다.')
+        })
+      }
     },
 
     defaultImg(e) {

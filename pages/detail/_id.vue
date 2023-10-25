@@ -50,15 +50,16 @@ export default {
     return {
       tab: null,
       club: [
-        { clubId: 0,
-          name: '',
-          clubProfileUrl: '',
-          clubBackgroundUrl: '',
-          description: '',
-          fee: 0,
-          accountNumber: '',
-          memberCount: 0,
-          boardCount: 0, }
+        // { clubId: 0,
+        //   name: '',
+        //   clubProfileUrl: '',
+        //   clubBackgroundUrl: '',
+        //   description: '',
+        //   fee: 0,
+        //   accountNumber: '',
+        //   memberCount: 0,
+        //   boardCount: 0, 
+        //   }
       ],
       items: [
         { name: '게시글', content: 'Tab2 Content!', pageName: 'board'},

@@ -9,15 +9,16 @@
       @click="openDialog"
     > 모임 생성
     </v-btn>
-    <v-dialog v-model="dialog" max-width="500">
-      <v-card>
+    <v-dialog v-model="dialog" scrollable max-width="600" max-height="600">
+      <v-card max-height="500">
         <v-card-title>모임일정 생성</v-card-title>
-        <v-card-text>
+        <v-card-text class="pa-0 pl-5 pr-5">
           <v-form>
             <v-text-field outlined color="#58C9B9" label="제목"></v-text-field>
             <v-text-field outlined color="#58C9B9" label="내용"></v-text-field>
             <v-row>
               <v-col
+                class="pt-0 pb-0"
                 cols="11"
                 sm="5"
               >
@@ -46,7 +47,6 @@
                     no-title
                     scrollable
                   >
-                    <v-spacer></v-spacer>
                     <v-btn
                       text
                       color="primary"
@@ -65,6 +65,7 @@
                 </v-menu>
               </v-col>
               <v-col
+                class="pt-0 pb-0"
                 cols="11"
                 sm="5"
               >
@@ -99,7 +100,7 @@
                 </v-menu>
               </v-col>
             </v-row>
-            <v-row>
+            <v-row class="mt-0">
               <v-col cols="6">
                 <v-text-field id="postcode" outlined color="#58C9B9" placeholder="우편번호"></v-text-field>
               </v-col>
@@ -118,9 +119,9 @@
             <v-text-field id="extraAddress" outlined color="#58C9B9" placeholder="참고항목"></v-text-field>
           </v-form>
         </v-card-text>
-        <v-card-actions>
-          <v-btn type="submit" color="#58C9B9">생성</v-btn>
-          <v-btn color="#58C9B9" @click="closeDialog">닫기</v-btn>
+        <v-card-actions class="pa-5">
+          <v-btn rounded color="#ffffff" @click="closeDialog">닫기</v-btn>
+          <v-btn rounded type="submit" color="#58C9B9">생성</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -214,6 +215,7 @@ export default {
 </script>
 
 <style scoped>
+
 .fixed-button {
   position: fixed;
   bottom: 5.5rem;

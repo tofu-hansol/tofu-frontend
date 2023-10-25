@@ -25,8 +25,7 @@
         <v-img :src="feature.photoList[0]" alt="Post Image" class="post-image"></v-img>
       </v-card-text>
 
-      <v-card-actions>
-
+      <v-card-actions class="pa-4">
         <v-icon>mdi-comment-outline</v-icon>
         <span>댓글 {{ 0 }} 개</span>
       </v-card-actions>
