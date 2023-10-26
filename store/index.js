@@ -39,16 +39,16 @@ export const mutations = {
     state.memberId = null
     state.accessToken = null
     state.refreshToken = null
-    localStorage.removeItem("login")
+    sessionStorage.removeItem("login")
   },
 
   saveStateToStorage(state) {
-		localStorage.setItem("login", JSON.stringify(state));
+		sessionStorage.setItem("login", JSON.stringify(state));
 	},
 
   readStateFromStorage(state) {
-		if (localStorage.getItem("login") != null) {
-			const storage = JSON.parse(localStorage.getItem("login"));
+		if (sessionStorage.getItem("login") != null) {
+			const storage = JSON.parse(sessionStorage.getItem("login"));
 			if (storage.memberId != null) {
 				state.memberId = storage.memberId;
 			}
