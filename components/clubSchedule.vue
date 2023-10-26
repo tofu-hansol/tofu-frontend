@@ -5,12 +5,12 @@
     outlined
   >
     <div>
-      <div class="calendar-icon">
+      <div class="calendar-icon rounded-xl pt-1 pb-1">
         <div class="month">
           10월
         </div>
-        <div class="day">16</div>
-        <div class="week">월</div>
+        <div class="day">27일</div>
+        <div class="week">Fri</div>
       </div>
     </div>
     <v-list-item three-line>
@@ -70,9 +70,9 @@ export default {
   align-items: center;
   justify-content: center;
   border-radius: 0.5rem;
-  border: solid 1px black;
-  width: 3rem;
-  height: 5rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  background-color: #f6f8fa;
 }
 
 .calendar-icon > * {
@@ -83,16 +83,14 @@ export default {
 }
 
 .month {
-  font-size: 1rem;
-  background-color: tomato;
-  border-radius: 0.5rem 0.5rem 0 0;
+  font-size: small;
 }
-
 .day {
-  font-size: 1.25rem;
+  font-size: large;
+  font-weight: 900;
 }
 
 .week {
-  font-size: 0.9rem;
+  font-size: small;
 }
 </style>

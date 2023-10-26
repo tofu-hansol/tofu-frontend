@@ -1,10 +1,33 @@
 <template>
   <div>
-    <ul>
-      <li v-for="image in images" :key="image.imageId">
-        <img class="activity-image" :src="image.imageUrl">
-      </li>
-    </ul>
+    <v-row>
+      <v-col
+        v-for="image in images"
+        :key="image.imageId"
+        class="d-flex child-flex"
+        cols="4"
+      >
+        <v-img
+          :src="image.imageUrl"
+          aspect-ratio="1"
+          cover
+          class="bg-grey-lighten-2 rounded-xl"
+        >
+          <template #placeholder>
+            <v-row
+              class="fill-height ma-0"
+              align="center"
+              justify="center"
+            >
+              <v-progress-circular
+                indeterminate
+                color="grey-lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
