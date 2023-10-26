@@ -13,7 +13,7 @@
             <nuxt-link to="/club" class="nav-link">동호회</nuxt-link>
           </li>
           <li>
-            <nuxt-link to="/about" class="nav-link">대시보드</nuxt-link>
+            <nuxt-link to="/dashboard" class="nav-link">대시보드</nuxt-link>
           </li>
         </ul>
         <div v-if="!isAuthenticated" class="button-wrap">
@@ -87,7 +87,7 @@ nav {
   margin: 0 auto;
   padding: 1.2rem 2rem;
   position: relative;
-  width: 75rem;
+  max-width: 75rem;
   height: 4rem;
 }
 

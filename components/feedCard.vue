@@ -57,20 +57,6 @@ export default {
       console.log('게시글' + this.clubId)
       await this.$axios.get('/api/clubs/boards/featured').then(result => {
         this.boards = result.data.data.content
-
-        const test = {
-                boardId: 2,
-                memberId: 3,
-                memberProfileUrl: '',
-                deptName: "인사팀",
-                memberName: "홍길동",
-                title: "테스트!",
-                content: "안녕하세요. 테스트 동호회입니다.",
-                createdAt: "2023-10-22T11:38:04+09:00",
-                updatedAt: "2023-10-22T11:39:56+09:00",
-                photoList: []
-        }
-        this.boards.push(test)
       })
     },
     defaultImg(e) {
