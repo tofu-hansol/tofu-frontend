@@ -2,10 +2,10 @@
   <div class="whole-wrap">
     <div class="club-detail-header">
       <div class="club-background-img">
-        <img src="https://recipe1.ezmember.co.kr/cache/recipe/2020/09/12/e04b41362cb7b666cefe0e07ebc94a201.jpg" alt="Back Image">
+        <img :src="club.clubBackgroundUrl" alt="Back Image">
       </div>
       <v-avatar class="club-profile-img" size="96">
-        <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/eaf6f7f9-3cd6-44ca-bf83-0cf01d703e74-profile_image-300x300.jpeg" alt="Profile Image" />
+        <img :src="club.clubProfileUrl" alt="Profile Image" />
       </v-avatar>
       <div class="club-profile-detail">
         <div class="club-profile-detail-header">

@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="img-wrap">
-          <img class="slide-img" src="~/assets/image/team.png"/>
+          <img class="slide-img" src="@/assets/image/team.png"/>
         </div>
       </div>
     </section>

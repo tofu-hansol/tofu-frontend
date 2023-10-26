@@ -27,7 +27,7 @@
 
       <v-card-actions class="pa-4">
         <v-icon>mdi-comment-outline</v-icon>
-        <span>댓글 {{ 0 }} 개</span>
+        <span class="pl-2">댓글 {{ 0 }} 개</span>
       </v-card-actions>
     </v-card>
   </div>

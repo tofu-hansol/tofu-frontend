@@ -1,8 +1,10 @@
 <template>
   <div>
     <v-btn 
-      elevation="0" 
-      style="color: snow; font-weight: 700; font-size: .875rem;"
+      rounded
+      elevation="0"
+      color="#2f9283" 
+      style="color: #ffffff; font-weight: 700; font-size: .875rem;"
       @click="openDialog"
     > 지도보기
     </v-btn>
@@ -13,7 +15,7 @@
           <defalt-map/>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="#2f9283" @click="closeDialog">닫기</v-btn>
+          <v-btn color= "#58c9b9" @click="closeDialog">닫기</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

@@ -1,10 +1,10 @@
 <template>
   <div class="club-short-wrap">
-    <v-card v-for="club in clubs" :key="club.clubId" class="mx-auto" width="350">
+    <v-card v-for="club in clubs" :key="club.clubId" class="mx-auto rounded-xl" width="350">
       <div @click="moveToClub(club.clubId)">
         <v-img
-          class="align-end text-white"
-          height="120"
+          class="align-end text-white rounded-xl"
+          height="200"
           :src="club.profileImageUrl"
           cover
           @error="defaultImg"

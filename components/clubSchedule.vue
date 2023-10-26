@@ -1,58 +1,93 @@
 <template>
-  <v-card
-    class="d-flex"
-    max-width="400"
-    outlined
-  >
-    <div>
-      <div class="calendar-icon rounded-xl pt-1 pb-1">
-        <div class="month">
-          10월
-        </div>
-        <div class="day">27일</div>
-        <div class="week">Fri</div>
-      </div>
-    </div>
-    <v-list-item three-line>
-      <v-list-item-content>
-        <div>
-          <span class="d-day-icon">
-            모집중
-          </span>
-        </div>
-        <v-list-item-title class="text-h5 mb-1">
-          모임 제목
-        </v-list-item-title>
-        <v-list-item-subtitle>
-          <div class="detail">
-            <div>장소</div>
-            <span class="time">오후 01:00</span>
-            <span class="perssonel">2/10명</span>
-          </div>
-        </v-list-item-subtitle>
-      </v-list-item-content>
+  <div>
+    <v-card
+      v-for="schedule in schedules"
+      :key="schedule.id"
+      class="d-flex"
+      max-width="400"
+      outlined
+    >
       <div>
-        <v-card-actions>
-          <map-popup/>
-          <v-btn
-            outlined
-            rounded
-            text
-          >
-            참여하기
-          </v-btn>
-      </v-card-actions>
+        <div class="calendar-icon rounded-xl pt-1 pb-1">
+          <div class="month">
+            {{ `${schedule.event_at.substr(5,2)}월` }}
+          </div>
+          <div class="day">{{ `${schedule.event_at.substr(8,2)}일` }}</div>
+          <div class="week">{{ getDayOfWeek(schedule.event_at) }}</div>
+        </div>
       </div>
-    </v-list-item>
-  </v-card>
+      <v-list-item three-line>
+        <v-list-item-content>
+          <div>
+            <v-btn class="pa-1 ma-0" elevation="0" rounded :color="getScheduleStateColor(schedule.status)" style="font-size: small; height: 100%;">
+              {{ getScheduleState(schedule.status) }}
+            </v-btn>
+          </div>
+          <v-list-item-title class="text-h5 mb-1">
+            {{ schedule.title }}
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            <div class="detail">
+              <div>장소: {{ schedule.placeName }}</div>
+              <span class="time">{{ `${schedule.event_at.split(' ')[1].substr(0, 5)}` }}</span>
+              <!-- <span class="perssonel">2/10명</span> -->
+            </div>
+          </v-list-item-subtitle>
+        </v-list-item-content>
+        <v-card-actions>
+          <v-row class="d-flex flex-column">
+            <map-popup class="ma-1"/>
+            <v-btn
+              outlined
+              rounded
+              text
+            >
+              참여하기
+            </v-btn>
+          </v-row>
+      </v-card-actions>
+      </v-list-item>
+    </v-card>
+  </div>
 </template>
 
 <script>
 import mapPopup from './mapPopup.vue'
 export default {
   components: { mapPopup },
+  data() {
+    return {
+      schedules : [
+        { id: 1,
+          event_at: '2023-10-10 07:58:43',
+          title: '한솔두부',
+          placeName: '한솔두부모임',
+          clubId: 1,
+          status: 'RECRUITING',
+        }
+      ]
+    }
+  },
+  
+  mounted() {
+  },
+
   methods: {
-    showMap() {
+    getDayOfWeek(date) {
+      const week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Set']
+      const dayOfWeek = week[new Date(date).getDay()]
+
+      return dayOfWeek
+    },
+
+    getScheduleState(status) {
+      const statusName = ['모집중', '마감']
+      return status === 'RECRUITING' ? statusName[0] : statusName[1]
+    },
+
+    getScheduleStateColor(status) {
+      const colors = ['#52da40', '#e93c3c']
+      return status === 'RECRUITING' ? colors[0] : colors[1]
     }
   }
 }
@@ -85,8 +120,9 @@ export default {
 .month {
   font-size: small;
 }
+
 .day {
-  font-size: large;
+  font-size: x-large;
   font-weight: 900;
 }
 
