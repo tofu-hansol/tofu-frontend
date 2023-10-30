@@ -36,16 +36,16 @@
 <script>
 export default {
   props: {
-    initClubId: {
-      type: String,
-      default: ''
+    param: {
+      type: String, 
+      default: '',
     }
   },
 
   data() {
     return {
       boards: [],
-      clubId: this.initClubId
+      clubId: this.param
     }
   },
   created() {
@@ -54,10 +54,18 @@ export default {
 
   methods: {
     async dataLoad() {
-      console.log('게시글' + this.clubId)
-      await this.$axios.get('/api/clubs/boards/featured').then(result => {
-        this.boards = result.data.data.content
-      })
+      console.log('clubId=========>' + this.clubId)
+      if (this.clubId) {
+        await this.$axios.get(`/api/clubs/${this.clubId}/boards`).then(result => {
+          this.boards = result.data.data.content
+          console.log('동호회 게시판')
+        })
+      } else {
+        await this.$axios.get('/api/clubs/boards/featured').then(result => {
+          this.boards = result.data.data.content
+          console.log('홍보 게시판')
+        })
+      }
     },
     defaultImg(e) {
       e.target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_RlT-ytB9A_TQFLKMqVYpdJiiRbckTCThmw&usqp=CAU'

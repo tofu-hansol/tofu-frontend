@@ -26,7 +26,7 @@
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="item in items" :key="item.name">
         <v-card-text>
-          <component :is="getTabComponent(item.name)" :param="club.clubId"></component>
+          <component :is="getTabComponent(item.name)" :param="$route.params.id"></component>
         </v-card-text>
       </v-tab-item>
     </v-tabs-items>
@@ -50,19 +50,9 @@ export default {
     return {
       tab: null,
       club: [
-        // { clubId: 0,
-        //   name: '',
-        //   clubProfileUrl: '',
-        //   clubBackgroundUrl: '',
-        //   description: '',
-        //   fee: 0,
-        //   accountNumber: '',
-        //   memberCount: 0,
-        //   boardCount: 0, 
-        //   }
       ],
       items: [
-        { name: '게시글', content: 'Tab2 Content!', pageName: 'board'},
+        { name: '게시글', content: 'Tab2 Content!'},
         { name: '모임', content: 'Tab3 Content!' },
         { name: '앨범', content: 'Tab3 Content!' },
         { name: '멤버', content: 'Tab3 Content!' },
@@ -81,14 +71,12 @@ export default {
   methods: {
    async dataLoad() {
       const clubId = this.$route.params.id
-      console.log(clubId)
       await this.$axios.get(`/api/clubs/${clubId}`, {
         headers: {
           Authentication: 'Bearer ' + this.$store.state.accessToken
         }
       }).then(result => {
         this.club = result.data.data
-        console.log(this.club)
       })
     },
 

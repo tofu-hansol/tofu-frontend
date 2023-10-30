@@ -106,7 +106,7 @@ export default {
 
       const api = `/api/clubs/${this.clubId}/boards`
       
-      await this.$axios.patch(api, formData, {
+      await this.$axios.post(api, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authentication': 'Bearer ' + this.$store.state.accessToken
