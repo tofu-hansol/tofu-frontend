@@ -40,11 +40,12 @@ import feedCardVue from '@/components/feedCard.vue';
 import writeButton from '@/components/writeButton.vue';
 import clubScheduleVue from '@/components/clubSchedule.vue';
 import albumVue from '@/components/clubAlbum.vue';
+import clubMemberVue from '@/components/clubMember.vue';
 // import { fetchClubById } from '@/api/index'
 
 
 export default {
-  components: { feedCardVue, writeButton, clubScheduleVue, albumVue },
+  components: { feedCardVue, writeButton, clubScheduleVue, albumVue, clubMemberVue },
 
   data() {
     return {
@@ -52,10 +53,10 @@ export default {
       club: [
       ],
       items: [
-        { name: '게시글', content: 'Tab2 Content!'},
-        { name: '모임', content: 'Tab3 Content!' },
-        { name: '앨범', content: 'Tab3 Content!' },
-        { name: '멤버', content: 'Tab3 Content!' },
+        { name: '게시글', content: 'Tab2 Content!', visible: true},
+        { name: '모임', content: 'Tab3 Content!', visible: true},
+        { name: '앨범', content: 'Tab3 Content!', visible: true},
+        { name: '멤버', content: 'Tab3 Content!', visible: true},
       ],
 
     }
@@ -88,6 +89,8 @@ export default {
           return clubScheduleVue;
         case "앨범":
           return albumVue;
+        case "멤버":
+          return clubMemberVue;
         default:
           return null;
       }
