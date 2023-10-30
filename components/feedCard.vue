@@ -13,6 +13,14 @@
             <span>{{ feature.createdAt }}</span>
           </div>
         </div>
+        <div v-if="isVisible(feature.memberId)" class="feed-btn-wrap">
+          <v-btn fab small variant="text" elevation="0" color="#ffffff">
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
+          <v-btn fab small variant="text" elevation="0" color="#ffffff" @click="deleteFeed(feature.boardId)">
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
+        </div>
       </v-card-title>
 
       <v-card-text>
@@ -70,12 +78,22 @@ export default {
     defaultImg(e) {
       e.target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_RlT-ytB9A_TQFLKMqVYpdJiiRbckTCThmw&usqp=CAU'
     },
+    async deleteFeed(boardId) {
+      await this.$axios.delete(`api/clubs/${this.clubId}/boards/${boardId}`).then(result => {
+        alert('삭제되었습니다.')
+        this.$router.go(0)
+      })
+    },
+    isVisible(memberId) {
+      return this.$store.state.memberId === memberId
+    }
   }
 }
 </script>
 
 <style scoped>
 .feed-header {
+  flex: 2;
   display: flex;
   flex-direction: column;
 }
