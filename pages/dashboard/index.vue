@@ -1,20 +1,63 @@
 <template>
-  <div>
-    <v-card max-width="48rem">
-      <v-card-title>
-        동호회별 모임장소 분포도
-      </v-card-title>
-      <v-card-text>
-        <iframe src="http://localhost:3000/map.html" class="fullscreen-iframe"></iframe>
-      </v-card-text>
-    </v-card>
-  </div>
+  <v-container>
+    <v-row class="pa-3">
+      <v-card width="100%" height="500px">
+        <v-card-title>동호회별 참석 부서 요약</v-card-title>
+        <v-card-text class="cart_1 pa-0">
+          <iframe
+            class="pa-0"
+            src="http://tofu-hansol.site:9080/dept"
+            width="100%"
+            height="100%" 
+            frameborder="0"
+          ></iframe>
+        </v-card-text>
+      </v-card>
+    </v-row>
+    <v-row class="pa-3">
+      <v-card width="100%" height="800px">
+        <v-card-title>동호회별 회원 비율 차트</v-card-title>
+        <v-card-text class="cart_2 pa-0">
+          <iframe
+            class="pa-0"
+            src="http://tofu-hansol.site:9080/member"
+            width="100%"
+            height="100%"
+            frameborder="0"
+          ></iframe>
+        </v-card-text>
+      </v-card>
+    </v-row>
+    <v-row class="pa-3">
+      <v-card width="100%" height="700px">
+        <v-card-title>동호회별 모임장소 분포도</v-card-title>
+        <v-card-text class="cart_3 pa-0">
+          <iframe
+            class="pa-0"
+            src="http://tofu-hansol.site:9080/map"
+            width="100%"
+            height="100%"
+            frameborder="0"
+          ></iframe>
+        </v-card-text>
+      </v-card>
+    </v-row>
+  </v-container>
 </template>
 
-<style>
-.fullscreen-iframe {
-  width: 100%;
-  height: 48rem; /* 화면 높이에 꽉 차도록 설정 */
-  border: none; /* 테두리 제거 (선택 사항) */
+<style scoped>
+.cart_1 {
+  height: 400px;
+  transform: scale(0.9);
+}
+
+.cart_2 {
+  height: 700px;
+  transform: scale(0.9);
+}
+
+.cart_3 {
+  height: 600px;
+  transform: scale(0.9);
 }
 </style>

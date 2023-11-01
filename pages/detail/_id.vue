@@ -30,8 +30,8 @@
         </v-card-text>
       </v-tab-item>
     </v-tabs-items>
-    <write-button :init-club-id="$route.params.id"/>
-    <new-schedule-popup :club-id="club.clubId"/>
+    <write-button v-if="isVisible()" :init-club-id="$route.params.id"/>
+    <new-schedule-popup v-if="isVisible()" :club-id="club.clubId"/>
   </div>
 </template>
 
@@ -70,7 +70,7 @@ export default {
   },
 
   methods: {
-   async dataLoad() {
+    async dataLoad() {
       const clubId = this.$route.params.id
       await this.$axios.get(`/api/clubs/${clubId}`, {
         headers: {
@@ -79,6 +79,13 @@ export default {
       }).then(result => {
         this.club = result.data.data
       })
+    },
+
+    isVisible() {
+      if(this.$store.state.memberId) {
+        return true
+      }
+      return false
     },
 
     getTabComponent(tabName) {

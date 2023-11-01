@@ -63,6 +63,10 @@ export default {
   },
   methods: {
     openDialog() {
+      if(!this.$store.state.memberId) {
+        alert('로그인 후 시도하세요.')
+        return this.$router.push('/user/sign-in')
+      }
       this.dialog = true;
     },
     closeDialog() {

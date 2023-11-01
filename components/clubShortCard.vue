@@ -69,6 +69,10 @@ export default {
     },
 
     registerClub(clubId) {
+      if(!this.$store.state.memberId) {
+        alert('로그인 후 시도하세요.')
+        return this.$router.push('/user/sign-in')
+      }
       const message = '가입하시겠습니까?'
       if(confirm(message)) {
         this.$axios.post(`/api/club-authority/${clubId}/members`).then(result => {
