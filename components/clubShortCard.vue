@@ -79,11 +79,16 @@ export default {
     },
 
     isVisible(clubId) {
-      const clubInfo = this.$store.state.clubAuth[clubId] ?? ''
+      if(this.$store.state) {
+        return true
+      }
+      
+      const clubInfo = this.$store.state.clubAuth[clubId]
 
-      if (clubInfo.clubId === clubId) {
+      if (clubInfo?.clubId === clubId) {
         return false
       }
+
       console.log(clubInfo, clubId)
       return true
     },

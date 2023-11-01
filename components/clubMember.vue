@@ -74,8 +74,12 @@ export default {
       })
     },
     isVisible(memberId) {
+      if(this.$store.state) {
+        return false
+      }
+
       const clubInfo = this.$store.state.clubAuth[this.clubId]
-      console.log(clubInfo.clubId, this.clubId)
+
       if (clubInfo.clubId === Number(this.clubId)) {
         return clubInfo.clubRole === 'PRESIDENT'
       }
