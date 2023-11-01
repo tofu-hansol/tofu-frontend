@@ -41,14 +41,29 @@
           </v-expansion-panel-header>
 
           <v-expansion-panel-content>
-            <v-row class="d-flex flex-row">
+            <v-row v-for="comment in feature.comments" :key="comment.id" class="d-flex flex-row">
+              <v-col cols="1">
+                <v-avatar class="member-image" width="32" height="32">
+                  <img :src="comment.memberProfileImage" alt="Profile Image" @error="defaultImg"/>
+                </v-avatar>
+              </v-col>
+              <v-col class="pl-0">
+                <div class="pa-2 comment-content rounded-lg">
+                  <div class="comment-content-user">{{ comment.memberName }}({{ comment.deptName }})</div>
+                  <div class="comment-content-main">{{ comment.content }}</div>
+                </div>
+              </v-col>
+            </v-row>
+            <v-row >
               <v-col cols="1">
                 <v-avatar class="member-image" width="32" height="32">
                   <img src="" alt="Profile Image" @error="defaultImg"/>
                 </v-avatar>
               </v-col>
               <v-col class="pl-0">
-                <div class="pa-2 comment-content rounded-lg">TEXT</div>
+                <form @submit.prevent="createComment">
+                  <v-text-field v-model="newComment" class="mt-0 pa-0" color="#58C9B9"></v-text-field>
+                </form>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
@@ -70,7 +85,8 @@ export default {
   data() {
     return {
       boards: [],
-      clubId: this.param
+      clubId: this.param,
+      newComment: ''
     }
   },
   created() {
@@ -81,22 +97,24 @@ export default {
     async dataLoad() {
       console.log('clubId=========>' + this.clubId)
       if (this.clubId) {
-        await this.$axios.get(`/api/clubs/${this.clubId}/boards`).then(result => {
-          this.boards = result.data.data.content
-          console.log(this.boards)
-          console.log('동호회 게시판')
+        const boards = await this.$axios.get(`/api/clubs/${this.clubId}/boards`).then(result => result.data.data.content);
 
-          this.boards.forEach(item => {
-            this.$axios.get(`/api/clubs/${Number(this.clubId)}/boards/${item.boardId}/comments`).then(result => {
-              item.comments = result.data.data
-            })
-          })
-        })
+        for (const item of boards) {
+          const comments = await this.$axios.get(`/api/clubs/${this.clubId}/boards/${item.boardId}/comments`).then(result => Array.from(result.data.data));
+          item.comments = comments;
+        }
+
+        this.boards = boards;
       } else {
-        await this.$axios.get('/api/clubs/boards/featured').then(result => {
-          this.boards = result.data.data.content
-          console.log('홍보 게시판')
-        })
+        const boards = await this.$axios.get('/api/clubs/boards/featured').then(result => result.data.data.content);
+        console.log('홍보 게시판');
+
+        for (const item of boards) {
+          const comments = await this.$axios.get(`/api/clubs/${this.clubId}/boards/${item.boardId}/comments`).then(result => Array.from(result.data.data));
+          item.comments = comments;
+        }
+
+        this.boards = boards;
       }
 
     },
@@ -141,5 +159,9 @@ export default {
 
 .comment-content {
   background-color: #f0f2f5;
+}
+
+.comment-content-user {
+  font-weight: 700;
 }
 </style>
