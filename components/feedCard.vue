@@ -30,13 +30,30 @@
         </div>
 
         <!-- 이미지 -->
-        <v-img :src="feature.photoList[0]" alt="Post Image" class="post-image"></v-img>
+        <v-img :src="feature.photoList[0].imageUrl" alt="Post Image" class="post-image"></v-img>
       </v-card-text>
 
-      <v-card-actions class="pa-4">
-        <v-icon>mdi-comment-outline</v-icon>
-        <span class="pl-2">댓글 {{ 0 }} 개</span>
-      </v-card-actions>
+      <v-expansion-panels>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            <v-icon>mdi-comment-outline</v-icon>
+            <span class="pl-2">댓글 {{ Number(feature.commentCount) }} 개</span>
+          </v-expansion-panel-header>
+
+          <v-expansion-panel-content>
+            <v-row class="d-flex flex-row">
+              <v-col cols="1">
+                <v-avatar class="member-image" width="32" height="32">
+                  <img src="" alt="Profile Image" @error="defaultImg"/>
+                </v-avatar>
+              </v-col>
+              <v-col class="pl-0">
+                <div class="pa-2 comment-content rounded-lg">TEXT</div>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-card>
   </div>
 </template>
@@ -66,7 +83,14 @@ export default {
       if (this.clubId) {
         await this.$axios.get(`/api/clubs/${this.clubId}/boards`).then(result => {
           this.boards = result.data.data.content
+          console.log(this.boards)
           console.log('동호회 게시판')
+
+          this.boards.forEach(item => {
+            this.$axios.get(`/api/clubs/${Number(this.clubId)}/boards/${item.boardId}/comments`).then(result => {
+              item.comments = result.data.data
+            })
+          })
         })
       } else {
         await this.$axios.get('/api/clubs/boards/featured').then(result => {
@@ -74,6 +98,7 @@ export default {
           console.log('홍보 게시판')
         })
       }
+
     },
     defaultImg(e) {
       e.target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_RlT-ytB9A_TQFLKMqVYpdJiiRbckTCThmw&usqp=CAU'
@@ -108,5 +133,13 @@ export default {
 
 .content p {
   font-size: 16px;
+}
+
+.v-expansion-panel-header > * {
+  flex: 0 0 auto;
+}
+
+.comment-content {
+  background-color: #f0f2f5;
 }
 </style>

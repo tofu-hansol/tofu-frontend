@@ -76,7 +76,7 @@ export default {
     return {
       title: '',
       content: '',
-      image: '',
+      image: null,
       clubId: 0,
     }
   }, 
@@ -100,9 +100,9 @@ export default {
       const formData = new FormData();
       formData.append('title', this.title);
       formData.append('content', this.content);
-      formData.append('clubPhotoRequestDTOs[0][id]', 0);
-      formData.append('clubPhotoRequestDTOs[0][image]', this.image);
-      formData.append('clubPhotoRequestDTOs[0][isMainPhoto]', true); 
+      formData.append('clubPhotoRequestDTOList', this.image);
+
+
 
       const api = `/api/clubs/${this.clubId}/boards`
       
