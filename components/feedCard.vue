@@ -30,7 +30,7 @@
         </div>
 
         <!-- 이미지 -->
-        <v-img :src="feature.photoList[0].imageUrl" alt="Post Image" class="post-image"></v-img>
+        <v-img :src="feature.photoList[0]?.imageUrl" alt="Post Image" class="post-image"></v-img>
       </v-card-text>
 
       <v-expansion-panels>
