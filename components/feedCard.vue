@@ -14,9 +14,9 @@
           </div>
         </div>
         <div v-if="isVisible(feature.memberId)" class="feed-btn-wrap">
-          <v-btn fab small variant="text" elevation="0" color="#ffffff">
+          <!-- <v-btn fab small variant="text" elevation="0" color="#ffffff">
             <v-icon>mdi-pencil</v-icon>
-          </v-btn>
+          </v-btn> -->
           <v-btn fab small variant="text" elevation="0" color="#ffffff" @click="deleteFeed(feature.boardId)">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
@@ -48,24 +48,39 @@
                 </v-avatar>
               </v-col>
               <v-col class="pl-0">
-                <div class="pa-2 comment-content rounded-lg">
-                  <div class="comment-content-user">{{ comment.memberName }}({{ comment.deptName }})</div>
-                  <div class="comment-content-main">{{ comment.content }}</div>
+                <div class="d-flex justify-space-between pa-2 comment-content rounded-lg">
+                  <div>
+                    <div class="comment-content-user">{{ comment.memberName }}({{ comment.deptName }})</div>
+                    <div class="comment-content-main">{{ comment.content }}</div>
+                  </div>
+                  <div v-if="isVisible(comment.memberId)">
+                    <!-- <v-btn fab small variant="text" elevation="0" color="inherit" @click="modifyComment(feature.boardId, comment.id)">
+                      <v-icon>mdi-pencil</v-icon>
+                    </v-btn> -->
+                    <v-btn fab small variant="text" elevation="0" color="inherit" @click="deleteComment(feature.boardId, comment.id)">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                </div>
                 </div>
               </v-col>
             </v-row>
-            <v-row >
-              <v-col cols="1">
-                <v-avatar class="member-image" width="32" height="32">
-                  <img src="" alt="Profile Image" @error="defaultImg"/>
-                </v-avatar>
-              </v-col>
-              <v-col class="pl-0">
-                <form @submit.prevent="createComment">
-                  <v-text-field v-model="newComment" class="mt-0 pa-0" color="#58C9B9"></v-text-field>
-                </form>
-              </v-col>
-            </v-row>
+            <v-form>
+              <v-row >
+                <v-col cols="1">
+                  <v-avatar class="member-image" width="32" height="32">
+                    <img src="" alt="Profile Image" @error="defaultImg"/>
+                  </v-avatar>
+                </v-col>
+                <v-col>
+                  <v-text-field v-model="newComment" class="mt-0 pa-0" color="#58C9B9" placeholder="댓글을 입력하세요.."></v-text-field>
+                </v-col>
+                <v-col cols="1">
+                  <v-btn fab small variant="text" elevation="0" color="#ffffff" @click="createComment(feature.boardId)">
+                    <v-icon>mdi-send</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-form>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -116,14 +131,27 @@ export default {
 
         this.boards = boards;
       }
-
     },
     defaultImg(e) {
       e.target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_RlT-ytB9A_TQFLKMqVYpdJiiRbckTCThmw&usqp=CAU'
     },
+    async createComment(boardId) {
+      const param = {
+        content: this.newComment
+      }
+      await this.$axios.post(`/api/clubs/${this.clubId}/boards/${boardId}/comments`, param ).then(reuslt => {
+        this.$router.go(0)
+      })
+    },
+    async deleteComment(boardId, commentId) {
+      await this.$axios.delete(`/api/clubs/${this.clubId}/boards/${boardId}/comments/${commentId}`).then(result => {
+        alert('댓글이 삭제되었습니다.')
+        this.$router.go(0)
+      })
+    },
     async deleteFeed(boardId) {
-      await this.$axios.delete(`api/clubs/${this.clubId}/boards/${boardId}`).then(result => {
-        alert('삭제되었습니다.')
+      await this.$axios.delete(`/api/clubs/${this.clubId}/boards/${boardId}`).then(result => {
+        alert('게시글이 삭제되었습니다.')
         this.$router.go(0)
       })
     },

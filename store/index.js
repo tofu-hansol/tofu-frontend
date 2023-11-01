@@ -40,6 +40,7 @@ export const mutations = {
     state.accessToken = null
     state.refreshToken = null
     sessionStorage.removeItem("login")
+    this.$router.go(0)
   },
 
   saveStateToStorage(state) {
@@ -84,6 +85,8 @@ export const actions = {
         err.response = {data:{"success":false, "errormessage":err.message}};
       }
       resultErr = err;
+      alert('존재하지 않은 회원이거나 비밀번호가 틀렸습니다.');
+      this.$router.go(0)
     }
 
     return new Promise((resolve, reject) => {

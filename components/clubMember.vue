@@ -14,14 +14,21 @@
             <span>{{ member.joinDate }}</span>
           </div>
         </div>
-        <!-- <div v-if="isVisible(member.memberId)" class="club-members-btn-wrap">
-          <v-btn fab small variant="text" elevation="0" color="#ffffff">
-            <v-icon>mdi-pencil</v-icon>
+        <div v-if="isVisible(member.memberId)" class="club-members-btn-wrap">
+          <v-btn
+            elevation="0"
+            color="#58C9B9"
+            @click="acceptJoinclub(member.memberId)"
+          > 수락
           </v-btn>
-          <v-btn fab small variant="text" elevation="0" color="#ffffff" @click="deleteFeed(feature.boardId)">
-            <v-icon>mdi-delete</v-icon>
+          <v-btn
+            outlined
+            elevation="0"
+            color="red"
+            @click="rejectJoinclub(member.memberId)"
+          > 거절
           </v-btn>
-        </div> -->
+        </div>
       </v-card-title>
     </v-card>
   </div>
@@ -53,6 +60,26 @@ export default {
         console.log(result)
         this.clubMembers = result.data.data
       })
+    },
+    async acceptJoinclub(memberId) {
+      await this.$axios.petch(`/api/club-authority/${this.clubId}/members/${memberId}`).then(result => {
+        alert('동호회 가입을 수락하였습니다!')
+        this.$router.go(0)
+      })
+    },
+    async rejectJoinclub(memberId) {
+      await this.$axios.delete(`/api/club-authority/${this.clubId}/members/${memberId}`).then(result => {
+        alert('동호회 가입을 거절하였습니다.')
+        this.$router.go(0)
+      })
+    },
+    isVisible(memberId) {
+      const clubInfo = this.$store.state.clubAuth[this.clubId]
+      console.log(clubInfo.clubId, this.clubId)
+      if (clubInfo.clubId === Number(this.clubId)) {
+        return clubInfo.clubRole === 'PRESIDENT'
+      }
+      return false
     },
     defaultImg(e) {
       e.target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_RlT-ytB9A_TQFLKMqVYpdJiiRbckTCThmw&usqp=CAU'
