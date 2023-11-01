@@ -29,8 +29,14 @@
           <p>{{ feature.content }}</p>
         </div>
 
-        <!-- 이미지 -->
-        <v-img :src="feature.photoList[0]?.imageUrl" alt="Post Image" class="post-image"></v-img>
+      <v-carousel v-if="filteredPhotoList(feature.photoList) > 0" hide-delimiters >
+        <v-carousel-item
+          v-for="(photo,id) in feature.photoList"
+          :key="id"
+          :src="photo.imageUrl"
+          cover
+        ></v-carousel-item>
+      </v-carousel>
       </v-card-text>
 
       <v-expansion-panels>
@@ -131,6 +137,10 @@ export default {
 
         this.boards = boards;
       }
+    },
+    filteredPhotoList(photoList){
+      const photos = photoList.filter(photo => photo.id !== null)
+      return photos.length
     },
     defaultImg(e) {
       e.target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_RlT-ytB9A_TQFLKMqVYpdJiiRbckTCThmw&usqp=CAU'
