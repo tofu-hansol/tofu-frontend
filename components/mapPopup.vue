@@ -12,7 +12,7 @@
       <v-card>
         <v-card-title>모임 장소</v-card-title>
         <v-card-text>
-          <defalt-map/>
+          <defalt-map :latitude="latitude" :longitude="longitude"/>
         </v-card-text>
         <v-card-actions>
           <v-btn color= "#58c9b9" @click="closeDialog">닫기</v-btn>
@@ -26,6 +26,10 @@
 import defaltMap from './defaltMap.vue';
 export default {
   components: { defaltMap },
+  props: {
+    latitude: Number,
+    longitude: Number,
+  },
   data() {
     return {
       dialog: false,

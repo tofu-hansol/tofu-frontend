@@ -96,12 +96,12 @@ export default {
     },
 
     isVisibleAdmin(clubId) {
-      const clubInfo = this.$store.state.clubAuth[clubId] ?? ''
+      // const clubInfo = this.$store.state.clubAuth[clubId] ?? 
 
-      if (clubInfo.clubRole === 'PRESIDENT') {
-        return true
-      }
-      return false
+      // if (clubInfo.clubRole === 'PRESIDENT') {
+      //   return true
+      // }
+      // return false
     },
 
     getTabComponent(tabName) {

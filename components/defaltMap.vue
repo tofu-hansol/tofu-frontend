@@ -23,6 +23,10 @@
 
 <script>
 export default {
+  props: {
+    latitude: Number,
+    longitude: Number,
+  },
   data() {
     return {
       info: false,
