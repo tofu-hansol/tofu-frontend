@@ -111,6 +111,8 @@ export default {
           'Content-Type': 'multipart/form-data',
           'Authentication': 'Bearer ' + this.$store.state.accessToken
         }
+      }).then(result => {
+        this.$router.go(-1)
       })
     },
 

@@ -83,8 +83,8 @@ export default {
     },
 
     isVisible(clubId) {
-      if(this.$store.state) {
-        return true
+      if(!this.$store.state.memberId) {
+        return false
       }
       
       const clubInfo = this.$store.state.clubAuth[clubId]
@@ -92,7 +92,6 @@ export default {
       if (clubInfo?.clubId === clubId) {
         return false
       }
-
       console.log(clubInfo, clubId)
       return true
     },

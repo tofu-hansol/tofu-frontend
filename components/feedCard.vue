@@ -43,7 +43,7 @@
         <v-expansion-panel>
           <v-expansion-panel-header>
             <v-icon>mdi-comment-outline</v-icon>
-            <span class="pl-2">댓글 {{ Number(feature.commentCount) }} 개</span>
+            <span class="pl-2">댓글 {{ Number(feature.comments.length) }} 개</span>
           </v-expansion-panel-header>
 
           <v-expansion-panel-content>
@@ -81,7 +81,7 @@
                   <v-text-field v-model="newComment" class="mt-0 pa-0" color="#58C9B9" placeholder="댓글을 입력하세요.."></v-text-field>
                 </v-col>
                 <v-col cols="1">
-                  <v-btn fab small variant="text" elevation="0" color="#ffffff" @click="createComment(feature.boardId)">
+                  <v-btn fab small variant="text" elevation="0" color="#ffffff" @click="createComment(feature.clubId, feature.boardId)">
                     <v-icon>mdi-send</v-icon>
                   </v-btn>
                 </v-col>
@@ -121,7 +121,7 @@ export default {
         const boards = await this.$axios.get(`/api/clubs/${this.clubId}/boards`).then(result => result.data.data.content);
 
         for (const item of boards) {
-          const comments = await this.$axios.get(`/api/clubs/${this.clubId}/boards/${item.boardId}/comments`).then(result => Array.from(result.data.data));
+          const comments = await this.$axios.get(`/api/clubs/${item.clubId}/boards/${item.boardId}/comments`).then(result => Array.from(result.data.data));
           item.comments = comments;
         }
 
@@ -131,7 +131,7 @@ export default {
         console.log('홍보 게시판');
 
         for (const item of boards) {
-          const comments = await this.$axios.get(`/api/clubs/${this.clubId}/boards/${item.boardId}/comments`).then(result => Array.from(result.data.data));
+          const comments = await this.$axios.get(`/api/clubs/${item.clubId}/boards/${item.boardId}/comments`).then(result => Array.from(result.data.data));
           item.comments = comments;
         }
 
@@ -145,12 +145,20 @@ export default {
     defaultImg(e) {
       e.target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_RlT-ytB9A_TQFLKMqVYpdJiiRbckTCThmw&usqp=CAU'
     },
-    async createComment(boardId) {
+    async createComment(clubId, boardId) {
+      if(!this.$store.state.memberId) {
+        alert('로그인 후 시도해주세요.')
+        return this.$router.push('/user/sign-in') 
+      }
       const param = {
         content: this.newComment
       }
-      await this.$axios.post(`/api/clubs/${this.clubId}/boards/${boardId}/comments`, param ).then(reuslt => {
+      
+      await this.$axios.post(`/api/clubs/${clubId}/boards/${boardId}/comments`, param ).then(reuslt => {
         this.$router.go(0)
+      }).catch(() => {
+        alert('해당 동호회 회원만 댓글을 작성할 수 있습니다.')
+        return this.$router.go(0)
       })
     },
     async deleteComment(boardId, commentId) {

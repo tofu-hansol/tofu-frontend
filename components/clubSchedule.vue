@@ -41,6 +41,7 @@
               outlined
               rounded
               text
+              @click="joinClubSchedule(schedule.id)"
             >
               참여하기
             </v-btn>
@@ -84,8 +85,23 @@ export default {
 
   methods: {
     async dateLoad() {
-      const result = await this.$axios.get(`/api/clubs/${this.$route.params.id}/schedules`)
+      const clubId = this.$route.params.id
+      const result = await this.$axios.get(`/api/clubs/${clubId}/schedules`)
       this.schedules = result.data.data
+    },
+
+    async joinClubSchedule(scheduleId) {
+      if (!this.$store.state.memberId) {
+        alert('로그인 후 시도해주세요.')
+        return this.$router.push('/user/sign-in')
+      }
+
+      const clubId = this.$route.params.id
+      await this.$axios.post(`/api/clubs/${clubId}/schedules/${scheduleId}/applicants`).then(result => {
+        alert('참가 신청이 완료되었습니다!')
+      }).catch(error => {
+        alert(error.response.data.message)
+      })
     },
 
     getDayOfWeek(date) {

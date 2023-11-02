@@ -2,7 +2,7 @@
   <div class="whole-wrap">
     <div class="club-detail-header">
       <div class="club-background-img">
-        <v-btn v-if="isVisibleAdmin(club.clubId)" class="club-back-img-modify mr-1" tonal fab small variant="text" color="#dcdee3" elevation="0" @click="modifyBackground(club.clubId)">
+        <v-btn class="club-back-img-modify mr-1" tonal fab small variant="text" color="#dcdee3" elevation="0" @click="modifyBackground(club.clubId)">
           <v-icon>mdi-cog</v-icon>
         </v-btn>
         <img :src="club.clubBackgroundUrl" alt="Back Image">
@@ -93,15 +93,6 @@ export default {
         return true
       }
       return false
-    },
-
-    isVisibleAdmin(clubId) {
-      // const clubInfo = this.$store.state.clubAuth[clubId] ?? 
-
-      // if (clubInfo.clubRole === 'PRESIDENT') {
-      //   return true
-      // }
-      // return false
     },
 
     getTabComponent(tabName) {
