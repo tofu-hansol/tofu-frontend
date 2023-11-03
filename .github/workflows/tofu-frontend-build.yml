@@ -33,7 +33,7 @@ jobs:
         echo "API_URL=$API_URL" >> .env
         echo "NAVER_MAP_API_KEY=$NAVER_MAP_API_KEY" >> .env
         echo "NAVER_MAPS_CLIENT_ID=$NAVER_MAPS_CLIENT_ID" >> .env
-        echo "NEXT_PUBLIC_KAKAO_APP_JS_KEY" >> .env
+        echo "NEXT_PUBLIC_KAKAO_APP_JS_KEY=$NEXT_PUBLIC_KAKAO_APP_JS_KEY" >> .env
       env:
         API_URL: ${{ secrets.API_URL }}
         NAVER_MAP_API_KEY: ${{ secrets.NAVER_MAP_API_KEY }}
