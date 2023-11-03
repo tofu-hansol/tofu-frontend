@@ -1,7 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-  ssr: false,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - tofu-frontend',
@@ -31,7 +30,7 @@ export default {
   plugins: [
     '~/plugins/local-storage',
     '~/plugins/axios',
-    '~/plugins/naver-map.js'
+    // '~/plugins/naver-map.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

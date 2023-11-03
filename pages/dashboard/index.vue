@@ -1,9 +1,9 @@
 <template>
-  <v-container>
+  <v-container class="d-flex flex-column align-center">
     <v-row class="pa-3">
-      <v-card width="100%" height="700px">
+      <v-card height="700px">
         <v-card-title>동호회별 모임장소 분포도</v-card-title>
-        <v-card-text class="cart_3 pa-0">
+        <v-card-text class="d-flex pt-5 pl-15 cart_3">
           <iframe
             class="pa-0"
             src="http://tofu-hansol.site:9080/map"
@@ -15,7 +15,7 @@
       </v-card>
     </v-row>
     <v-row class="pa-3">
-      <v-card width="100%" height="500px">
+      <v-card height="500px">
         <v-card-title>동호회별 참석 부서 요약</v-card-title>
         <v-card-text class="cart_1 pa-0">
           <iframe
@@ -29,7 +29,7 @@
       </v-card>
     </v-row>
     <v-row class="pa-3">
-      <v-card width="100%" height="800px">
+      <v-card height="600px">
         <v-card-title>동호회별 회원 비율 차트</v-card-title>
         <v-card-text class="cart_2 pa-0">
           <iframe
@@ -47,17 +47,20 @@
 
 <style scoped>
 .cart_1 {
+  min-width: 1100px;
   height: 400px;
-  transform: scale(0.9);
+  transform: scale(1);
 }
 
 .cart_2 {
-  height: 700px;
-  transform: scale(0.9);
+  min-width: 1100px;
+  height: 600px;
+  transform: scale(1);
 }
 
 .cart_3 {
-  height: 1000px;
-  transform: scale(0.9);
+  min-width: 1100px;
+  height: 600px;
+  transform: scale(1);
 }
 </style>

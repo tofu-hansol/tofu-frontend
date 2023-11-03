@@ -1,70 +1,93 @@
 <template>
-  <div class="map-box">
-    <naver-maps 
-      :width="450" 
-      :height="450" 
-      :mapOptions="mapOptions"
-      @init="onLoad"
-    >
-      <naver-marker :lat="37.559357" :lng="127.9783881" @click="onMarkerClicked" @load="onMarkerLoaded"/>
-      <naver-info-window
-        class="info-window"
-        @load="onWindowLoad"
-        :isOpen="info"
-        :marker="marker"
-      >
-        <div class="info-window-container">
-          <h1>{{ hello }}</h1>
-        </div>
-      </naver-info-window>
-    </naver-maps>
+  <div>
+    <div id="map"></div>
   </div>
 </template>
 
 <script>
+import { toRaw } from "vue";
 export default {
+  name: "KakaoMap",
   props: {
     latitude: Number,
     longitude: Number,
   },
   data() {
     return {
-      info: false,
-      marker: null,
-      map: null,
-      mapOptions: {
-        lat: 37.559357,
-        lng: 127.9783881,
-        zoom: 12,
-        zoomControl: true,
-        zoomControlOptions: {position: 'TOP_RIGHT'},
-        mapTypeControl: true,
-      },
-      initLayers: ['BACKGROUND', 'BACKGROUND_DETAIL', 'POI_KOREAN', 'TRANSIT', 'ENGLISH', 'CHINESE', 'JAPANESE']
+      markerPositions: [
+        [this.latitude, this.longitude],
+      ],
+      markers: [],
+      infowindow: null,
+    };
+  },
+  mounted() {
+    if(!(this.latitude || this.longitude)) {
+      alert('지정된 위치가 없습니다.')
+      this.$router.go(0)
     }
+    const script = document.createElement("script");
+    /* global kakao */
+    script.onload = () => kakao.maps.load(this.initMap);
+    script.src =
+      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0";
+    document.head.appendChild(script);
   },
   methods: {
-    onLoad(map) {
-      this.map = map;
-      // 마커가 있는 위치로 지도의 중심 및 줌을 조정
-      // this.map.fitBounds([this.marker.getPosition()]);
+    initMap() {
+      const container = document.getElementById("map");
+      const options = {
+        center: new kakao.maps.LatLng(this.latitude, this.longitude),
+        level: 3,
+      };
+
+      // 지도 객체를 등록합니다.
+      // 지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
+      this.map = new kakao.maps.Map(container, options);
+
+      const positions = this.markerPositions.map(
+        (position) => new kakao.maps.LatLng(...position)
+      )
+
+      if (positions.length > 0) {
+        this.markers = positions.map(
+          (position) =>
+            new kakao.maps.Marker({
+              map: toRaw(this.map),
+              position,
+            })
+        );
+
+        const bounds = positions.reduce(
+          (bounds, latlng) => bounds.extend(latlng),
+          new kakao.maps.LatLngBounds()
+        );
+
+        toRaw(this.map).setBounds(bounds);
+      }
     },
-    onWindowLoad(that) {
+    changeSize(size) {
+      const container = document.getElementById("map");
+      container.style.width = `${size}px`;
+      container.style.height = `${size}px`;
+      toRaw(this.map).relayout();
     },
-    onMarkerClicked(event) {
-      this.info = !this.info;
-    },
-    onMarkerLoaded(vue) {
-      this.marker = vue.marker;
-    }
-  }
-}
+  },
+};
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .info-window-container {
-    padding: 10px;
-    width: 300px;
-    height: 100px;
-  }
+#map {
+  width: 400px;
+  height: 400px;
+}
+
+.button-group {
+  margin: 10px 0px;
+}
+
+button {
+  margin: 0 3px;
+}
 </style>
