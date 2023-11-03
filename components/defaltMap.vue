@@ -30,7 +30,7 @@ export default {
     /* global kakao */
     script.onload = () => kakao.maps.load(this.initMap);
     script.src =
-      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0";
+      `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.NEXT_PUBLIC_KAKAO_APP_JS_KEY}`;
     document.head.appendChild(script);
   },
   methods: {

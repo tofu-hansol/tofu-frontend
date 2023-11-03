@@ -6,7 +6,7 @@
         <v-card-text class="d-flex pt-5 pl-15 cart_3">
           <iframe
             class="pa-0"
-            src="https://tofu-hansol.site:9080/map"
+            src="http://tofu-hansol.site:9080/map"
             width="100%"
             height="100%"
             frameborder="0"
@@ -20,7 +20,7 @@
         <v-card-text class="cart_1 pa-0">
           <iframe
             class="pa-0"
-            src="https://tofu-hansol.site:9080/dept"
+            src="http://tofu-hansol.site:9080/dept"
             width="100%"
             height="100%" 
             frameborder="0"
@@ -34,7 +34,7 @@
         <v-card-text class="cart_2 pa-0">
           <iframe
             class="pa-0"
-            src="https://tofu-hansol.site:9080/position"
+            src="http://tofu-hansol.site:9080/position"
             width="100%"
             height="100%"
             frameborder="0"
