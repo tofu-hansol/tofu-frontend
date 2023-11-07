@@ -68,14 +68,14 @@ export default {
       this.$router.push(`detail/${id}`)
     },
 
-    registerClub(clubId) {
+    async registerClub(clubId) {
       if(!this.$store.state.memberId) {
         alert('로그인 후 시도하세요.')
         return this.$router.push('/user/sign-in')
       }
       const message = '가입하시겠습니까?'
       if(confirm(message)) {
-        this.$axios.post(`/api/club-authority/${clubId}/members`).then(result => {
+        await this.$axios.post(`/api/club-authority/${clubId}/members`).then(result => {
           alert('가입신청이 완료되었습니다. \n동호회 회장 승인 후 활동이 가능합니다.')
           this.$router.go(0)
         })

@@ -16,8 +16,8 @@ export default {
     this.getTest()
   },
   methods: {
-    getTest() {
-      this.$axios.get('/api/tests')
+    async getTest() {
+      await this.$axios.get('/api/tests')
       .then((res) => {
         this.data = res.data
       })

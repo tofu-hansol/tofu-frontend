@@ -74,14 +74,16 @@ export default {
       })
     },
     isVisible(memberId) {
-      if(this.$store.state) {
+      if(Object.keys(this.$store.getters.getClubAuth).lenght > 0) {
         return false
       }
 
-      const clubInfo = this.$store.state.clubAuth[this.clubId]
+      const clubInfo = this.$store.getters.getClubAuth[Number(this.clubId)]
 
-      if (clubInfo.clubId === Number(this.clubId)) {
-        return clubInfo.clubRole === 'PRESIDENT'
+
+      const member = this.clubMembers.filter(member => member.memberId === memberId && member.clubJoinStatus === 'WAITING')
+      if (clubInfo.clubRole === 'PRESIDENT' && member.length > 0) {
+        return true
       }
       return false
     },

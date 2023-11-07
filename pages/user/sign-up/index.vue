@@ -105,8 +105,8 @@ export default {
     resetForm() {
       this.$refs.form.reset()
     },
-    submitForm() {
-      this.$axios.post('/api/auth/signup', this.submit).then(
+    async submitForm() {
+      await this.$axios.post('/api/auth/signup', this.submit).then(
         rst => {
           console.log('rst -> ', rst)
 

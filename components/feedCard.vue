@@ -17,7 +17,7 @@
           <!-- <v-btn fab small variant="text" elevation="0" color="#ffffff">
             <v-icon>mdi-pencil</v-icon>
           </v-btn> -->
-          <v-btn fab small variant="text" elevation="0" color="#ffffff" @click="deleteFeed(feature.boardId)">
+          <v-btn fab small variant="text" elevation="0" color="#ffffff" @click="deleteFeed(feature.clubId, feature.boardId)">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </div>
@@ -63,7 +63,7 @@
                     <!-- <v-btn fab small variant="text" elevation="0" color="inherit" @click="modifyComment(feature.boardId, comment.id)">
                       <v-icon>mdi-pencil</v-icon>
                     </v-btn> -->
-                    <v-btn fab small variant="text" elevation="0" color="inherit" @click="deleteComment(feature.boardId, comment.id)">
+                    <v-btn fab small variant="text" elevation="0" color="inherit" @click="deleteComment(feature.clubId, feature.boardId, comment.id)">
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
                 </div>
@@ -78,7 +78,7 @@
                   </v-avatar>
                 </v-col>
                 <v-col>
-                  <v-text-field v-model="newComment" class="mt-0 pa-0" color="#58C9B9" placeholder="댓글을 입력하세요.."></v-text-field>
+                  <v-text-field v-model="newComment" class="mt-0 pa-0" color="#58C9B9" placeholder="댓글을 입력하세요.." @keyup.enter="createComment(feature.clubId, feature.boardId)"></v-text-field>
                 </v-col>
                 <v-col cols="1">
                   <v-btn fab small variant="text" elevation="0" color="#ffffff" @click="createComment(feature.clubId, feature.boardId)">
@@ -107,7 +107,7 @@ export default {
     return {
       boards: [],
       clubId: this.param,
-      newComment: ''
+      newComment: '',
     }
   },
   created() {
@@ -161,14 +161,14 @@ export default {
         return this.$router.go(0)
       })
     },
-    async deleteComment(boardId, commentId) {
-      await this.$axios.delete(`/api/clubs/${this.clubId}/boards/${boardId}/comments/${commentId}`).then(result => {
+    async deleteComment(clubId, boardId, commentId) {
+      await this.$axios.delete(`/api/clubs/${clubId}/boards/${boardId}/comments/${commentId}`).then(result => {
         alert('댓글이 삭제되었습니다.')
         this.$router.go(0)
       })
     },
-    async deleteFeed(boardId) {
-      await this.$axios.delete(`/api/clubs/${this.clubId}/boards/${boardId}`).then(result => {
+    async deleteFeed(clubId, boardId) {
+      await this.$axios.delete(`/api/clubs/${clubId}/boards/${boardId}`).then(result => {
         alert('게시글이 삭제되었습니다.')
         this.$router.go(0)
       })

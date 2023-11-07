@@ -104,7 +104,8 @@ export default {
         fee: 0,
         accountNumber: '',
         memberCount: 0,
-        boardCount: 0
+        boardCount: 0,
+        categoryId: 0,
       },
       clubId: '',
       backgroundImage: null, 
@@ -134,19 +135,27 @@ export default {
     }, 
 
     async send() {
-      const clubDetailParam = {
-        description: this.description,
-        accountNumber: this.accountNumber,
-        fee: this.fee
+      const clubEditRequestDTO = {
+        description: this.club.description,
+        accountNumber: this.club.accountNumber,
+        fee: Number(this.club.fee),
+        categoryId: 1
       }
-      await this.$axios.patch(`/api/clubs/${this.clubId}`, clubDetailParam)
 
-      if(this.profileImage) {
-        await this.$$axios.patch(`/api/clubs/${this.clubId}/profile-image`, this.profileImage)
-      }
-      if(this.backgroundImage){
-        await this.$$axios.patch(`/api/clubs/${this.clubId}/background-image`, this.backgroundImage)
-      }
+      console.log(clubEditRequestDTO)
+      const formData = new FormData()
+      formData.append('clubEditRequestDTO', clubEditRequestDTO)
+      formData.append('backgroundImage', this.backgroundImage)
+      formData.append('profileImage', this.profileImage)
+
+      await this.$axios.patch(`/api/clubs/${this.club.clubId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authentication': 'Bearer ' + this.$store.state.accessToken
+        }
+      }).then(result => {
+        this.$$router.go(-1)
+      })
     },
 
     selectFile(fileType) {
