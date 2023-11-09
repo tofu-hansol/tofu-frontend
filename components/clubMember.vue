@@ -62,7 +62,7 @@ export default {
       })
     },
     async acceptJoinclub(memberId) {
-      await this.$axios.petch(`/api/club-authority/${this.clubId}/members/${memberId}`).then(result => {
+      await this.$axios.patch(`/api/club-authority/${this.clubId}/members/${memberId}`).then(result => {
         alert('동호회 가입을 수락하였습니다!')
         this.$router.go(0)
       })

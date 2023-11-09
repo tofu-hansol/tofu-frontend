@@ -139,7 +139,7 @@ export default {
         description: this.club.description,
         accountNumber: this.club.accountNumber,
         fee: Number(this.club.fee),
-        categoryId: 1
+        categoryId: this.club.categoryId,
       }
 
       console.log(clubEditRequestDTO)
@@ -155,6 +155,8 @@ export default {
         }
       }).then(result => {
         this.$$router.go(-1)
+      }).catch(ex => {
+        console.log(ex)
       })
     },
 
