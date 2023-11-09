@@ -99,7 +99,8 @@ export default {
         },
         params: { companyId: 1}
       })
-      console.log(result)
+      this.depts = result.data.data.map(item => item.name)
+      console.log(this.depts)
     },
 
     resetForm() {
