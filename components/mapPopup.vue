@@ -8,11 +8,11 @@
       @click="openDialog"
     > 지도보기
     </v-btn>
-    <v-dialog v-model="dialog" max-width="500">
+    <v-dialog v-model="dialog" max-width="500" :key="dialogKey">
       <v-card>
         <v-card-title>모임 장소</v-card-title>
         <v-card-text>
-          <defalt-map :latitude="latitude" :longitude="longitude" />
+          <defalt-map :latitude="latitude" :longitude="longitude"/>
         </v-card-text>
         <v-card-actions>
           <v-btn color= "#58c9b9" @click="closeDialog">닫기</v-btn>
@@ -33,16 +33,17 @@ export default {
   data() {
     return {
       dialog: false,
-      componentKey: 0,
+      dialogKey: 0
     }
   },
   methods: {
     openDialog() {
       this.dialog = true;
+      this.dialogKey += 1;
     },
     closeDialog() {
       this.dialog = false;
-      this.$router.go(this.$router.currenRoute)
+      this.$router.go(0)
     },
   }
 }
