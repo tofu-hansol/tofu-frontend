@@ -15,7 +15,7 @@
         <v-card-text class="pa-0 pl-5 pr-5">
           <v-form>
             <v-text-field v-model="schedule.title" outlined color="#58C9B9" label="제목"></v-text-field>
-            <v-text-field v-model="schedule.content" outlined color="#58C9B9" label="내용"></v-text-field>
+            <v-text-field v-model="schedule.place_name" outlined color="#58C9B9" label="장소"></v-text-field>
             <v-text-field v-model="schedule.eventAt" type="datetime-local" outlined color="#58C9B9" label="날짜"></v-text-field>
             <v-row class="mt-0">
               <v-col cols="6">
@@ -53,7 +53,7 @@ export default {
       dialog: false,
       schedule: {
         title: '',
-        content: '',
+        place_name: '',
         eventAt: '',
         latitude: '',
         longitude: '',

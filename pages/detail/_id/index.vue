@@ -33,8 +33,8 @@
         </v-card-text>
       </v-tab-item>
     </v-tabs-items>
-    <write-button v-if="isVisible()" :init-club-id="$route.params.id"/>
-    <new-schedule-popup v-if="isVisible()" :club-id="club.clubId"/>
+    <write-button v-if="isVisible(club.clubId, 'board')" :init-club-id="$route.params.id"/>
+    <new-schedule-popup v-if="isVisible(club.clubId, 'schedule')" :club-id="club.clubId"/>
   </div>
 </template>
 
@@ -88,10 +88,17 @@ export default {
       this.$router.push(`/detail/${clubId}/modify`)
     },
 
-    isVisible() {
-      if(this.$store.state.memberId) {
+    isVisible(clubId, gubun) {
+      const store = this.$store.state
+      if(store.memberId && 
+         store.clubAuth[clubId]?.clubRole === 'PRESIDENT') {
         return true
       }
+
+      if(store.memberId && gubun === 'board') {
+        return true
+      }
+      
       return false
     },
 
