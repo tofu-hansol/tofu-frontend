@@ -15,7 +15,7 @@
         <v-card-text class="pa-0 pl-5 pr-5">
           <v-form>
             <v-text-field v-model="schedule.title" outlined color="#58C9B9" label="제목"></v-text-field>
-            <v-text-field v-model="schedule.place_name" outlined color="#58C9B9" label="장소"></v-text-field>
+            <v-text-field v-model="schedule.placeName" outlined color="#58C9B9" label="장소"></v-text-field>
             <v-text-field v-model="schedule.eventAt" type="datetime-local" outlined color="#58C9B9" label="날짜"></v-text-field>
             <v-row class="mt-0">
               <v-col cols="6">
@@ -32,8 +32,8 @@
             <v-text-field id="roadAddress" v-model="roadAddress" outlined color="#58C9B9" placeholder="도로명주소"></v-text-field>
             <span id="guide" style="color:#999;display:none"></span>
             <v-text-field id="detailAddress" v-model="detailAddress" outlined color="#58C9B9" placeholder="상세주소"></v-text-field>
-            <v-text-field id="latitude" v-model="latitude" outlined color="#58C9B9" placeholder="상세주소"></v-text-field>
-            <v-text-field id="longitude" v-model="longitude" outlined color="#58C9B9" placeholder="상세주소"></v-text-field>
+            <v-text-field id="latitude" v-model="latitude" outlined color="#58C9B9" placeholder="위도"></v-text-field>
+            <v-text-field id="longitude" v-model="longitude" outlined color="#58C9B9" placeholder="경도"></v-text-field>
           </v-form>
         </v-card-text>
         <v-card-actions class="pa-5">
@@ -53,13 +53,13 @@ export default {
       dialog: false,
       schedule: {
         title: '',
-        place_name: '',
+        placeName: '',
         eventAt: '',
-        latitude: '',
-        longitude: '',
+        latitude: 0,
+        longitude: 0,
       },
-      latitude: '',
-      longitude: '',
+      latitude: 0,
+      longitude: 0,
       postcode: '',
       roadAddress: '',
       detailAddress: '',
@@ -74,9 +74,10 @@ export default {
       ]
     }
   },
-  
+
   watch: {
     latitude: function(val) {
+        console.log(val)
         this.schedule.latitude = val
     },
     longitude: function(val) {
@@ -151,7 +152,7 @@ export default {
     },
 
     async createSchedule() {
-      await this.$axios.post(`/api/clubs/${this.$route.params.id}/schedules`, this.schedule,{
+      await this.$axios.post(`/api/clubs/${this.$route.params.id}/schedules`, this.schedule ,{
         headers: {
           Authentication: 'Bearer ' + this.$store.state.accessToken
         }}
