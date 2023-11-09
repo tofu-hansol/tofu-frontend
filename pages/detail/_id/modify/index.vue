@@ -144,7 +144,10 @@ export default {
 
       console.log(clubEditRequestDTO)
       const formData = new FormData()
-      formData.append('clubEditRequestDTO', clubEditRequestDTO)
+      formData.append('description', this.club.description);
+      formData.append('accountNumber', this.club.accountNumber);
+      formData.append('fee', Number(this.club.fee));
+      formData.append('categoryId', this.club.categoryId);
       formData.append('backgroundImage', this.backgroundImage)
       formData.append('profileImage', this.profileImage)
 
@@ -154,7 +157,7 @@ export default {
           'Authentication': 'Bearer ' + this.$store.state.accessToken
         }
       }).then(result => {
-        this.$$router.go(-1)
+        this.$router.go(-1)
       }).catch(ex => {
         console.log(ex)
       })
