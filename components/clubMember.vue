@@ -82,7 +82,7 @@ export default {
 
 
       const member = this.clubMembers.filter(member => member.memberId === memberId && member.clubJoinStatus === 'WAITING')
-      if (clubInfo.clubRole === 'PRESIDENT' && member.length > 0) {
+      if (clubInfo?.clubRole === 'PRESIDENT' && member.length > 0) {
         return true
       }
       return false
